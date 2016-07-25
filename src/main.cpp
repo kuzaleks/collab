@@ -1,5 +1,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++
 #include <iostream>
+#include <cxxtest/TestSuite.h>
 
 using namespace std;
 
