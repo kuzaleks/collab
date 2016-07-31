@@ -46,3 +46,4 @@ Installed **Python** and **ply** package.
 Please follow instruction on the following resources
 * https://habrahabr.ru/post/69160/
 * http://cxxtest.com/guide.html#gettingStarted
+* https://habrahabr.ru/company/2gis/blog/306166/
