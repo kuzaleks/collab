@@ -13,10 +13,12 @@ Installed **Python** and **ply** package.
 2. Setup env veriables:
 
 *export CXXTEST="path/to/unpacked/cxxtest/folder/"*
+
 *export CPATH="$CXXTEST:$CPATH"*
 
 (e.g.
 *export CXXTEST="/home/aliaksei-kuzmin2/Projects/utils/cxxtest-4.3/"*
+
 *export CPATH="$CXXTEST:$CPATH"*
 )
 
@@ -44,3 +46,4 @@ Installed **Python** and **ply** package.
 Please follow instruction on the following resources
 * https://habrahabr.ru/post/69160/
 * http://cxxtest.com/guide.html#gettingStarted
+* https://habrahabr.ru/company/2gis/blog/306166/
