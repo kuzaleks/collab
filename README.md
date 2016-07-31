@@ -13,10 +13,12 @@ Installed **Python** and **ply** package.
 2. Setup env veriables:
 
 *export CXXTEST="path/to/unpacked/cxxtest/folder/"*
+
 *export CPATH="$CXXTEST:$CPATH"*
 
 (e.g.
 *export CXXTEST="/home/aliaksei-kuzmin2/Projects/utils/cxxtest-4.3/"*
+
 *export CPATH="$CXXTEST:$CPATH"*
 )
 
