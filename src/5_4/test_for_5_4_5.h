@@ -12,6 +12,7 @@
 #include <cmath>
 #include <cxxtest/TestSuite.h>
 #include "headerWithCustomFunctions.h"
+#include "simpleFunctionsForTests.h"
 
 typedef double (*Function)(double);
 typedef double (*FunctionWithArg)(double, float);
@@ -19,9 +20,43 @@ typedef double (*FunctionWithArg)(double, float);
 class testSuite : public CxxTest::TestSuite
 {
     public:
-        // for testFunction
+        void testLinear()
+        {
+            double maximumDeviation = 1e-2;  // TODO: determine this value
+            // iter used in rootCalculation() but to us value isn't important
+            int iter = 0;
+            for (int i = 0; i < 5; i++)  // 0.0 to 0.5
+                TS_ASSERT_DELTA(rootCalculation(linearEquation, i / 10.0, 4.5, 1e-6, iter), 1.0, maximumDeviation);
+        }
+
+        void testQuadratic()
+        {
+            double maximumDeviation = 1e-2;  // TODO: determine this value
+            // iter used in rootCalculation() but to us value isn't important
+            int iter = 0;
+            for (int i = 35; i < 38; i++)  // 3.5 to 3.8
+            TS_ASSERT_LESS_THAN_EQUALS(abs(rootCalculation(quadraticEquation, 0.5, i / 10.0, 1e-6, iter) - 2.0), maximumDeviation);
+        }
+
+        void testCubic()
+        {
+            double maximumDeviation = 1e-2;  // TODO: determine this value
+            // iter used in rootCalculation() but to us value isn't important
+            int iter = 0;
+            for (int i = 50; i < 53; i++)  // 5.0 to 5.3
+                TS_ASSERT_LESS_THAN_EQUALS(rootCalculation(cubicEquation, 1.0, i / 10.0, 1e-6, iter) - 3.0, maximumDeviation)
+        }
+
+        void testDeviationOfRoot()
+        {
+            double maximumDeviation = 1e-1;  // TODO: determine this value
+            // iter used in rootCalculation() but to us value isn't important
+            int iter = 0;
+            TS_ASSERT_DELTA(rootCalculation(functionA, -3.0, 0.0, 1e-6, iter), findingOfRoot(functionA, -3.0, 0.0, 1e-6), maximumDeviation)
+        }
 
     private:
+        // reference standards functions of finding the derivative
         double derivativeOfFunction(Function function, double x)
         {
             return ((function(x + 1e-6) - function(x)) / 1e-6);
@@ -32,8 +67,7 @@ class testSuite : public CxxTest::TestSuite
             return ((function(x + 1e-6, argument) - function(x, argument)) / 1e-6);
         }
 
-        // reference standards functions of finding root
-        // М = 2 – метод касательных
+        // reference standards functions of finding root (Newton's method)
         double findingOfRoot(Function function, float boundaryA, float boundaryB, double accuracyE)
         {
             double root = (boundaryA + boundaryB) / 2, almostRoot;  // 'almostRoot' is approximation of root which help us find root
@@ -44,16 +78,20 @@ class testSuite : public CxxTest::TestSuite
             }
             while(abs(root - almostRoot) > accuracyE);
 
+            // for tracking of values (<iostream> must be included)
+            //std::cout << " root = " << root << " -- ";
+            //std::cout << " # " << function(root) << " #\n";
+
             return root;
         }
-    
+
         double findingOfRoot(FunctionWithArg function, float boundaryA, float boundaryB, double s, double accuracyE)
         {
             double root = (boundaryA + boundaryB) / 2, almostRoot;  // 'almostRoot' is approximation of root which help us find root
             do
             {
                 almostRoot = root;
-                root = almostRoot - function(almostRoot, s) / derivativeOfFunction(funct, almostRoot, s);
+                root = almostRoot - function(almostRoot, s) / derivativeOfFunction(function, almostRoot, s);
             }
             while(abs(root - almostRoot) > accuracyE);
 

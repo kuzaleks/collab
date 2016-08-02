@@ -38,7 +38,7 @@ double functDeriv(FunDoubDoub funct, double x, double s)
 	return ((funct(x + 1e-6, s) - funct(x, s)) / 1e-6);
 }
 
-double func(int a, int b, double E, int &iter, FunDoub funct)//!!
+double rootCalculation(FunDoub funct, float a, float b, double E, int &iter)//!!
 {
 	double xn, xnn = (a + b) / 2;
 	do
@@ -51,7 +51,7 @@ double func(int a, int b, double E, int &iter, FunDoub funct)//!!
 	return xnn;
 }
 
-double func(double a, double b, double E, int &iter,FunDoubDoub funct, double s)//!!
+double rootCalculation(FunDoubDoub funct, float a, float b, double s, double E, int &iter)//!!
 {
 	double xn, xnn = (a + b) / 2;
 	do
@@ -64,33 +64,32 @@ double func(double a, double b, double E, int &iter,FunDoubDoub funct, double s)
 	return xnn;
 }
 
+// main() is commented out to solve the problem with multiple definition of `main' (main defined in generated runner.cpp)
 /*int main()
 {
 	cout << "\n a or b? ";
 	char decision;
 	cin >> decision;
+	int k_iter = 0;
+	double E = 1e-6;
 	if (decision == 'a')
 	{
 		cout << "x	fx		k_iter" << endl;
-		double E = 1e-6;
-		int k_iter = 0, a = -3, b = 0;
-		double x = func(a, b, E, k_iter, functionA);
+		float a = -3, b = 0;
+		double x = rootCalculation(functionA, a, b, E, k_iter);
 		double fx = functionA(x);
-		if (fx < 1e-15)
-				fx = 0;
+		if (fx < 1e-15)    fx = 0;
 		cout << setprecision(2) << x << "	" << fx << "		" << k_iter << endl;
 	}
 	else if (decision == 'b')
 	{
 		cout << "s	x	fx	k_iter" << endl;
-		double E = 1e-6, a = 0.5, b = 0.8;
-		int k_iter = 0;
+		float a = 0.5, b = 0.8;
 		for (double s = 0.7; s <= 1.6; s += 0.3)
 		{
-			double x = func(a, b, E, k_iter, functionB, s);
+			double x = rootCalculation(functionB, a, b, s, E, k_iter);
 			double fx = functionB(x, s);
-			if (fx < 1e-15)
-				fx = 0;
+			if (fx < 1e-15)    fx = 0;
 			cout.width(2);
 			cout << setprecision(2) << s << "	" << x << "	" << fx << "	" << k_iter << endl;
 		}
