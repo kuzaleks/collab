@@ -1,0 +1,62 @@
+// MyTestSuite1.h
+#include <cxxtest/TestSuite.h>
+#include <string>
+#include "src/str.h"
+
+
+class MyTestSuite1 : public CxxTest::TestSuite
+{
+public:
+    void testAddition(void)
+    {
+        TS_ASSERT_EQUALS(is_equal(), true);
+    }
+
+    bool is_equal()
+    {
+    	ifstream fout("test_base_of_stud.bin", ios::binary);
+    	ofstream fin("file_to_compare.bin", ios::binary);
+
+    	create_young(fin, fout);
+    	fout.close();
+    	fin.close();
+
+    	Student stud1;
+    	Student stud2;
+
+    	ifstream our_file("test_base_of_ys.bin", ios::binary);
+    	ifstream user_file("file_to_compare.bin", ios::binary);
+
+    	our_file.read((char*)&stud1, sizeof(Student));
+    	user_file.read((char*)&stud2, sizeof(Student));
+        //cout << "__________" << endl;
+        //out_struct(stud1);
+        //out_struct(stud2);
+        //cout << "__________" << endl;
+    	if(strcmp(stud1.name, stud2.name) ||
+               stud1.date.y != stud2.date.y ||
+               stud1.date.m != stud2.date.m ||
+               stud1.date.d != stud2.date.d ||
+               stud1.cource != stud2.cource || 
+               stud1.mark != stud2.mark) return false;
+
+    	while(!our_file.eof() && !user_file.eof()){
+    		our_file.read((char*)&stud1, sizeof(Student));
+    		user_file.read((char*)&stud2, sizeof(Student));
+            //cout << "__________" << endl;
+            //out_struct(stud1);
+            //out_struct(stud2);
+            //cout << "__________" << endl;
+    		if(strcmp(stud1.name, stud2.name) ||
+               stud1.date.y != stud2.date.y ||
+               stud1.date.m != stud2.date.m ||
+               stud1.date.d != stud2.date.d ||
+               stud1.cource != stud2.cource || 
+               stud1.mark != stud2.mark) return false;
+            fout.get();
+            if(!fout.eof())
+                fout.unget();
+    	}
+        return true;
+    }
+};
