@@ -3,5 +3,5 @@
 double functionA(double x);
 double functionB(double x, float argumentS);
 
-double rootCalculation(double (*function)(double), float boundaryA, float boundaryB, double accuracyE, int &k_iter);
-double rootCalculation(double (*function)(double, double), float boundaryA, float boundaryB, double argumentS, double accuracyE, int &k_iter);
+double rootOfEquation(double (*function)(double), float boundaryA, float boundaryB, double accuracyE, int &k_iter);
+double rootOfEquation(double (*function)(double, float), float boundaryA, float boundaryB, float argumentS, double accuracyE, int &k_iter);
