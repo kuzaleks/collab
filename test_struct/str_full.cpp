@@ -81,20 +81,33 @@ void create_young(ofstream& fin, ifstream& fout)
 		c[i].date.y = c[i].date.m = c[i].date.d = 0;
 	}
 
+	fout.read((char*)&stud, sizeof(Student));
+	compare(stud, c[stud.cource - 1]);
+	/*fout.get();// берем символ
+	if(!fout.eof())// если он не был последним
+		fout.unget();// возвращаем его на место*/
+	
 	while (!fout.eof()){
 		fout.read((char*)&stud, sizeof(Student));
 		compare(stud, c[stud.cource - 1]);
+		fout.get();// берем символ
+		if(!fout.eof())// если он не был последним
+			fout.unget();// возвращаем его на место	
 	}
 
+	int k = 0;
 	for (int i = 0; i < 5; i++)
-		if (c[i].date.y != 0)
+		if (c[i].date.y != 0){
 			fin.write((char*)&c[i], sizeof(Student));
+			k++;
+		}
+	cout << k << endl;
 }
 
 
 
 int main()
-{
+{/*
 	int num_stud;
 	cout << "Num of students: "; cin >> num_stud;
 
@@ -119,6 +132,35 @@ int main()
 	fin1.close();
 
 	ifstream fout1("base_of_ys.bin", ios::binary);
+	read_file(fout1);
+
+
+	return 0;*/
+
+	int num_stud;
+	cout << "Num of students: "; cin >> num_stud;
+
+	ofstream fin("only_first_cource.bin", ios::binary);
+
+	create(fin, num_stud);
+	fin.close();
+
+	ifstream fout("only_first_cource.bin", ios::binary);
+	ofstream fin1("ready_first_cource.bin", ios::binary);
+
+	read_file(fout);
+	fout.close();
+
+	cout << "_____________" << endl;
+
+
+	ifstream fout2("only_first_cource.bin", ios::binary);
+	create_young(fin1, fout2);
+
+	fout.close();
+	fin1.close();
+
+	ifstream fout1("ready_first_cource.bin", ios::binary);
 	read_file(fout1);
 
 

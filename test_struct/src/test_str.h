@@ -3,18 +3,28 @@
 #include <string>
 #include "src/str.h"
 
-
 class MyTestSuite1 : public CxxTest::TestSuite
 {
 public:
-    void testAddition(void)
+    void testGeneral(void)
     {
-        TS_ASSERT_EQUALS(is_equal(), true);
+      TSM_ASSERT_EQUALS("The general case hasn't passed the test!", is_equal_files("start_general_case.bin", "ready_general_case.bin"), true);
     }
 
-    bool is_equal()
+    void testOnlyFirstCource(void)
     {
-    	ifstream fout("test_base_of_stud.bin", ios::binary);
+      TSM_ASSERT_EQUALS("The file with students only first cource didn't pass the test!", is_equal_files("start_only_first_cource.bin", "ready_only_first_cource.bin"), true);
+    }
+
+    void testAllFiveCources(void)
+    {
+      TSM_ASSERT_EQUALS("The file with students all five cources didn't pass the test!", is_equal_files("start_all_five_cources.bin", "ready_all_five_cources.bin"), true);
+    }
+
+
+    bool is_equal_files(const char* name_of_start_file, const char* name_of_ready_file)
+    {
+    	ifstream fout(name_of_start_file, ios::binary);
     	ofstream fin("file_to_compare.bin", ios::binary);
 
     	create_young(fin, fout);
@@ -24,7 +34,7 @@ public:
     	Student stud1;
     	Student stud2;
 
-    	ifstream our_file("test_base_of_ys.bin", ios::binary);
+    	ifstream our_file(name_of_ready_file, ios::binary);
     	ifstream user_file("file_to_compare.bin", ios::binary);
 
     	our_file.read((char*)&stud1, sizeof(Student));
@@ -33,6 +43,7 @@ public:
         //out_struct(stud1);
         //out_struct(stud2);
         //cout << "__________" << endl;
+
     	if(strcmp(stud1.name, stud2.name) ||
                stud1.date.y != stud2.date.y ||
                stud1.date.m != stud2.date.m ||
@@ -43,20 +54,21 @@ public:
     	while(!our_file.eof() && !user_file.eof()){
     		our_file.read((char*)&stud1, sizeof(Student));
     		user_file.read((char*)&stud2, sizeof(Student));
-            //cout << "__________" << endl;
-            //out_struct(stud1);
-            //out_struct(stud2);
-            //cout << "__________" << endl;
+        //cout << "__________" << endl;
+        //out_struct(stud1);
+        //out_struct(stud2);
+        //cout << "__________" << endl;
+
     		if(strcmp(stud1.name, stud2.name) ||
                stud1.date.y != stud2.date.y ||
                stud1.date.m != stud2.date.m ||
                stud1.date.d != stud2.date.d ||
                stud1.cource != stud2.cource || 
                stud1.mark != stud2.mark) return false;
-            fout.get();
-            if(!fout.eof())
-                fout.unget();
+        fout.get();
+        if(!fout.eof())
+            fout.unget();
     	}
-        return true;
+      return true;
     }
 };

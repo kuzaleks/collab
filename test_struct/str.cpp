@@ -71,9 +71,9 @@ void create_young(ofstream& fin, ifstream& fout)
 	while (!fout.eof()){
 		fout.read((char*)&stud, sizeof(Student));
 		compare(stud, c[stud.cource - 1]);
-		fout.get();// берем символ
-		if(!fout.eof())// если он не был последним
-			fout.unget();// возвращаем его на место
+		fout.get();
+		if(!fout.eof())
+			fout.unget();
 	}
 
 	for (int i = 0; i < 5; i++)
