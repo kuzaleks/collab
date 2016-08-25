@@ -1,12 +1,16 @@
 // Unittests for task:  part B lab 5 ex 6
 //
-// Дан массив чисел произвольной длины. Отсортировать массив заданными  методами.
-// Для каждого метода сортировки определить число сравнений и перемещений (перестановок с одного места на другое)
-//  элементов в процессе выполнения программы. Для тестирования программы заполнять массив значениями тремя способами:
+// Дан массив чисел произвольной длины. Отсортировать массив заданными
+//  методами. Для каждого метода сортировки определить число сравнений и
+//  перемещений (перестановок с одного места на другое) элементов в 
+//  процессе выполнения программы. Для тестирования программы заполнять
+//  массив значениями тремя способами:
 //   по возрастанию,  по убыванию, случайным образом. 
-// Сравнение элементов массива оформить отдельной функцией. Каждый метод сортировки,
-//  каждый способ заполнения массивов  оформить отдельными функциями. Функции оформить в виде отдельного файла. 
-// Сравнить экспериментальные результаты с известными теоретическими  оценками этих показателей для заданных методов сортировки. 
+// Сравнение элементов массива оформить отдельной функцией.
+// Каждый метод сортировки, каждый способ заполнения массивов оформить
+//  отдельными функциями. Функции оформить в виде отдельного файла. 
+// Сравнить экспериментальные результаты с известными теоретическими
+//  оценками этих показателей для заданных методов сортировки. 
 
 #ifndef TEST_FOR_5_6_H
 #define TEST_FOR_5_6_H
@@ -17,118 +21,125 @@
 #include <cxxtest/TestSuite.h>
 #include "headerWithCustomFunctions.h"
 
-typedef void (*SortFunction)(int *array, int size, int &comparisons, int &movements);
-typedef void (*QSortFunction)(int *array, int left, int right, int &comparisons, int &movements);
+typedef void (*SortFunction)(int *array, int size,
+ int &comparisons, int &movements);
+typedef void (*QSortFunction)(int *array, int left, int right,
+ int &comparisons, int &movements);
 
 class testSuiteOne : public CxxTest::TestSuite
 {
     public:
-        void testTypicalCase()
-        {
-            differentCases(quickSort, 50, 77);
-        }
-
-        void testLessTrivialCase()
-        {
-            differentCases(quickSort, 5e4, 1000);
-        }
 
     protected:
-        // Quicksort takes arguments different from other sorts which we test, so we overload functions of cases.
-        void differentCases(SortFunction sort, int dimension, int lim)
-        {
-            bestCase(sort, dimension);
-            worstCase(sort, dimension);
-            randomCase(sort, dimension, lim);
-        }
+        // Quicksort takes arguments different from other sorts
+        //  which we test, so we overload functions of cases.
+//        void /*_*/(SortFunction sort, /*complexity,*/
+//         clock_t (*situation)(SortFunction sort, int size))
+//        {
+//            TIME = situation(sort, 10);
+//            TIME = situation(sort, 100);
+//            TIME = situation(sort, 1000);
+//            TIME = situation(sort, 10000);
+//            TIME = situation(sort, 100000);
+//        }
 
-        void differentCases(QSortFunction sort, int dimension, int lim)
-        {
-            bestCase(sort, dimension);
-            worstCase(sort, dimension);
-            randomCase(sort, dimension, lim);
-        }
-
-        void bestCase(SortFunction sort, int size)
+        clock_t bestCaseTime(SortFunction sort, int size)
         {
             int *array = new int[size];
-            fillingArrayIncrease(array, size);
+            fillingIncrease(array, size);
+
+            clock_t startTime = clock();
             int comparisons = 0, movements = 0;
             sort(array, size, comparisons, movements);
-            TS_ASSERT(arraySorted(array, size));
-            // количество перемещений не должно превосходить M(min)
-            //TS_ASSERT_LESS_THAN_EQUALS(movements, M(min));
+            clock_t endTime = clock();
 
+            TS_ASSERT(isSorted(array, size));
             delete [] array;
+
+            return endTime - startTime;
         }
 
-        void bestCase(QSortFunction sort, int size)
+        clock_t bestCaseTime(QSortFunction sort, int size)
         {
             int *array = new int[size];
-            fillingArrayIncrease(array, size);
+            fillingIncrease(array, size);
+
+            clock_t startTime = clock();
             int comparisons = 0, movements = 0;
             sort(array, 0, size - 1, comparisons, movements);
-            TS_ASSERT(arraySorted(array, size));
-            // количество перемещений не должно превосходить M(min)
-            //TS_ASSERT_LESS_THAN_EQUALS(movements, M(min));
+            clock_t endTime = clock();
 
+            TS_ASSERT(isSorted(array, size));
             delete [] array;
+
+            return endTime - startTime;
         }
 
-        void worstCase(SortFunction sort, int size)
+        clock_t worstCaseTime(SortFunction sort, int size)
         {
             int *array = new int[size];
-            fillingArrayDecrease(array, size);
+            fillingDecrease(array, size);
+
+            clock_t startTime = clock();
             int comparisons = 0, movements = 0;
             sort(array, size, comparisons, movements);
-            TS_ASSERT(arraySorted(array, size));
-            // количество перемещений не должно превосходить M(max)
-            //TS_ASSERT_LESS_THAN_EQUALS(movements, M(max));
+            clock_t endTime = clock();
 
+            TS_ASSERT(isSorted(array, size));
             delete [] array;
+
+            return endTime - startTime;
         }
 
-        void worstCase(QSortFunction sort, int size)
+        clock_t worstCaseTime(QSortFunction sort, int size)
         {
             int *array = new int[size];
-            fillingArrayDecrease(array, size);
+            fillingDecrease(array, size);
+
+            clock_t startTime = clock();
             int comparisons = 0, movements = 0;
             sort(array, 0, size - 1, comparisons, movements);
-            TS_ASSERT(arraySorted(array, size));
-            // количество перемещений не должно превосходить M(max)
-            //TS_ASSERT_LESS_THAN_EQUALS(movements, M(max));
+            clock_t endTime = clock();
 
+            TS_ASSERT(isSorted(array, size));
             delete [] array;
+
+            return endTime - startTime;
         }
 
-        void randomCase(SortFunction sort, int size, int lim)
+        clock_t randomCaseTime(SortFunction sort, int size, int lim)
         {
             int *array = new int[size];
-            fillingArrayRandomly(array, size, lim);
+            fillingRandomly(array, size, lim);
+
+            clock_t startTime = clock();
             int comparisons = 0, movements = 0;
             sort(array, size, comparisons, movements);
-            TS_ASSERT(arraySorted(array, size));
-            // количество перемещений не должно превосходить M(cp)
-            //TS_ASSERT_LESS_THAN_EQUALS(movements, M(cp));
+            clock_t endTime = clock();
 
+            TS_ASSERT(isSorted(array, size));
             delete [] array;
+
+            return endTime - startTime;
         }
 
-        void randomCase(QSortFunction sort, int size, int lim)
+        clock_t randomCaseTime(QSortFunction sort, int size, int lim)
         {
             int *array = new int[size];
-            fillingArrayRandomly(array, size, lim);
+            fillingRandomly(array, size, lim);
+
+            clock_t startTime = clock();
             int comparisons = 0, movements = 0;
             sort(array, 0, size - 1, comparisons, movements);
-            TS_ASSERT(arraySorted(array, size));
-            // количество перемещений не должно превосходить M(cp)
-            //TS_ASSERT_LESS_THAN_EQUALS(movements, M(cp));
+            clock_t endTime = clock();
 
+            TS_ASSERT(isSorted(array, size));
             delete [] array;
+
+            return endTime - startTime;
         }
 
-
-        bool arraySorted(int *array, int size)
+        bool isSorted(int *array, int size)
         {
             for (int i = 0; i < size - 1; ++i)
                 if (array[i] > array[i + 1])
@@ -137,20 +148,19 @@ class testSuiteOne : public CxxTest::TestSuite
             return true;
         }
 
-
-        void fillingArrayIncrease(int *array, int size)
+        void fillingIncrease(int *array, int size)
         {
             for (int i = 0; i < size; i++)
                 array[i] = i;
         }
 
-        void fillingArrayDecrease(int *array, int size)
+        void fillingDecrease(int *array, int size)
         {
             for (int i = 0; i < size; i++)
                 array[i] = size - i;
         }
 
-        void fillingArrayRandomly(int *array, int size, int lim)
+        void fillingRandomly(int *array, int size, int lim)
         {
             srand((unsigned)time( NULL ));
             for (int i = 0; i < size; i++)
