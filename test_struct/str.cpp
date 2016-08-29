@@ -3,7 +3,7 @@
 #include "src/str.h"
 
 
-Student Input()
+Student input()
 {
 	cout << "________________" << endl;
 	cin.get();
@@ -18,7 +18,7 @@ Student Input()
 void create(ofstream& fin, int num)
 {
 	for (int i = 0; i < num; i++){
-		Student stud = Input();
+		Student stud = input();
 		fin.write((char*)&stud, sizeof(Student));
 	}
 }

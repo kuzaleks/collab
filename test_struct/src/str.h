@@ -20,7 +20,7 @@ struct Student
 	double mark;
 };
 
-Student Input();
+Student input();
 
 void create(ofstream& fin, int num);
 
