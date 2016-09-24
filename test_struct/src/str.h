@@ -4,7 +4,7 @@
 using namespace std;
 
 
-const int MAX = 100;
+const int MAX = 74;
 
 
 struct Birthday
