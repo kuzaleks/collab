@@ -13,7 +13,7 @@ public:
 
     void testOnlyFirstCource(void)
     {
-      TSM_ASSERT_EQUALS("The file with students only first cource didn't pass the test!", isEqualFiles("start_only_first_cource.bin", "ready_only_first_cource.bin"), true);
+      TSM_ASSERT_EQUALS("The file with students only first year didn't pass the test!", isEqualFiles("start_only_first_cource.bin", "ready_only_first_cource.bin"), true);
     }
 
     void testAllFiveCources(void)
@@ -22,48 +22,40 @@ public:
     }
 
 private:
-    bool isEqualFiles(const char* name_of_start_file, const char* name_of_ready_file)
+    bool isEqualFiles(const char* nameOfStartFile, const char* nameOfReadyFile)
     {
-      ifstream fout(name_of_start_file, ios::binary);
+      ifstream fout(nameOfStartFile, ios::binary);
       ofstream fin("file_to_compare.bin", ios::binary);
 
-      create_young(fin, fout);
+      createYoung(fin, fout);
       fout.close();
       fin.close();
 
       Student stud1;
       Student stud2;
 
-      ifstream our_file(name_of_ready_file, ios::binary);
-      ifstream user_file("file_to_compare.bin", ios::binary);
+      ifstream ourFile(nameOfReadyFile, ios::binary);
+      ifstream userFile("file_to_compare.bin", ios::binary);
 
-      our_file.read((char*)&stud1, sizeof(Student));
-      user_file.read((char*)&stud2, sizeof(Student));
-        //cout << "__________" << endl;
-        //out_struct(stud1);
-        //out_struct(stud2);
-        //cout << "__________" << endl;
+      ourFile.read((char*)&stud1, sizeof(Student));
+      userFile.read((char*)&stud2, sizeof(Student));
 
       if(strcmp(stud1.name, stud2.name) ||
                stud1.date.y != stud2.date.y ||
                stud1.date.m != stud2.date.m ||
                stud1.date.d != stud2.date.d ||
-               stud1.cource != stud2.cource || 
+               stud1.year != stud2.year || 
                stud1.mark != stud2.mark) return false;
 
-      while(!our_file.eof() && !user_file.eof()){
-        our_file.read((char*)&stud1, sizeof(Student));
-        user_file.read((char*)&stud2, sizeof(Student));
-        //cout << "__________" << endl;
-        //out_struct(stud1);
-        //out_struct(stud2);
-        //cout << "__________" << endl;
+      while(!ourFile.eof() && !userFile.eof()){
+        ourFile.read((char*)&stud1, sizeof(Student));
+        userFile.read((char*)&stud2, sizeof(Student));
 
         if(strcmp(stud1.name, stud2.name) ||
                stud1.date.y != stud2.date.y ||
                stud1.date.m != stud2.date.m ||
                stud1.date.d != stud2.date.d ||
-               stud1.cource != stud2.cource || 
+               stud1.year != stud2.year || 
                stud1.mark != stud2.mark) return false;
         fout.get();
         if(!fout.eof())

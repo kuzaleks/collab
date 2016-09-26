@@ -16,7 +16,7 @@ struct Student
 {
 	char name[MAX];
 	Birthday date;
-	int cource;
+	int year;
 	double mark;
 };
 
@@ -24,10 +24,10 @@ Student input();
 
 void create(ofstream& fin, int num);
 
-void out_struct(Student stud);
+void outStruct(Student stud);
 
-void read_file(ifstream& fout);
+void readFile(ifstream& fout);
 
 void compare(Student s1, Student& s2);
 
-void create_young(ofstream& fin, ifstream& fout);
+void createYoung(ofstream& fin, ifstream& fout);

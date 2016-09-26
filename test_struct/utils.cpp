@@ -10,7 +10,7 @@ Student input()
 	Student stud;
 	cout << "Name: ";  cin.getline(stud.name, MAX);
 	cout << "Birthday: ";  cin >> stud.date.d >> stud.date.m >> stud.date.y; 
-	cout << "Student's cource and mark: ";  cin >> stud.cource >> stud.mark;
+	cout << "Student's year and mark: ";  cin >> stud.year >> stud.mark;
 
 	return stud;
 }
@@ -23,20 +23,20 @@ void create(ofstream& fin, int num)
 	}
 }
 
-void out_struct(Student stud)
+void outStruct(Student stud)
 {
-	cout << stud.name << " " << stud.date.d << "." << stud.date.m << "." << stud.date.y << " " << stud.cource << " " << stud.mark << endl;
+	cout << stud.name << " " << stud.date.d << "." << stud.date.m << "." << stud.date.y << " " << stud.year << " " << stud.mark << endl;
 }
 
-void read_file(ifstream& fout)
+void readFile(ifstream& fout)
 {
 	Student stud;
 
 	fout.read((char*)&stud, sizeof(Student));
-	out_struct(stud);
+	outStruct(stud);
 	while (!fout.eof()){
 		fout.read((char*)&stud, sizeof(Student));
-		out_struct(stud);
+		outStruct(stud);
 		fout.get();
 		if(!fout.eof())
 			fout.unget();
@@ -54,23 +54,20 @@ void compare(Student s1, Student& s2)
 	}
 }
 
-void create_young(ofstream& fin, ifstream& fout)
+void createYoung(ofstream& fin, ifstream& fout)
 {
 	Student stud;
 	Student c[5];
 
-	//cout << "_________" << endl;
-	//read_file(fout);
-	//cout << "_________" << endl;
 	for(int i =0; i < 5; i++){
 		c[i].date.y = c[i].date.m = c[i].date.d = 0;
 	}
 
 	fout.read((char*)&stud, sizeof(Student));
-	compare(stud, c[stud.cource - 1]);
+	compare(stud, c[stud.year - 1]);
 	while (!fout.eof()){
 		fout.read((char*)&stud, sizeof(Student));
-		compare(stud, c[stud.cource - 1]);
+		compare(stud, c[stud.year - 1]);
 		fout.get();
 		if(!fout.eof())
 			fout.unget();
