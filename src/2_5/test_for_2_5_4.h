@@ -1,5 +1,9 @@
 // Unittests for task:  part B lab 2 ex 5 variant 4
+//
 //  4. Дано натуральное число n. Выяснить, можно ли представить n! в виде произведения трех последовательных целых чисел.
+
+#ifndef TEST_FOR_2_5_4_H
+#define TEST_FOR_2_5_4_H
 
 #include <cxxtest/TestSuite.h>
 #include "headerWithCustomFunctions.h"
@@ -20,7 +24,7 @@ class testSuite : public CxxTest::TestSuite
         }
 
     private:
-      // 'Etalon' function of factorial calculation.
+      // reference standards function of factorial calculation.
         int factorialFunction(int n)
         {
             int result = 1;
@@ -41,3 +45,5 @@ class testSuite : public CxxTest::TestSuite
         int min_;
         int max_;
 };
+
+#endif // TEST_FOR_2_5_4_H
