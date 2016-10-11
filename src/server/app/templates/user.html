@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>User: {{user.fname}} {{user.lname}}</h1>
+<h4>Course: {{user.course}} Group: {{user.group}}</h4>
+</p>
+<div>
+    {% include 'labtask_table.html' %}
+	<h3>Attempts:</h3>
+    <ol>
+    {% for attempt in attempts %}
+        <li>
+            {% include 'attempt.html' %}
+        </li><br>
+    {% endfor %}
+    </ol>
+</div>
+{% endblock %}

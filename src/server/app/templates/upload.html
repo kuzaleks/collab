@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% include condition %}
+
+{% if task_exist %}
+<table>
+    <tbody>
+        <tr>
+            <td>
+                <h1>Upload task</h1>
+                <form method="POST" enctype="multipart/form-data">
+                    {{form.hidden_tag()}}
+                    <p>
+                        <table>
+                            <tbody>
+                                <tr>{{form.task(multiple="multiple")}}</tr>
+                            </tbody>
+                        </table>
+                        {% for error in form.errors.task %}
+                        <span style="color: red;">[{{error}}]</span>
+                        {% endfor %}<br>
+                    </p>
+                    <p><input type="submit" value="Upload"></p>
+                </form>
+            </td>
+            <td>
+                <h1>Attempts:</h1>
+                <ol>
+                {% for attempt in attempts %}
+                    <li>
+                        {% include 'attempt.html' %}
+                    </li><br>
+                {% endfor %}
+                </ol>
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endif %}
+
+{% endblock %}

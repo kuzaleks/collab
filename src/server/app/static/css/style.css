@@ -1,0 +1,56 @@
+/* TODO: cool design */
+
+.old-date{display: none;}
+
+.wrapper{
+	margin: 0 auto;
+	width: 60%;
+}
+
+.input, .output {
+    border: 1px solid #888;
+}
+
+.output {
+    margin-bottom: 1em;
+    position: relative;
+    top: -1px;
+}
+
+.title {
+    font-size: 1.3em;
+    padding: 0.25em;
+    border-bottom: 1px solid #888;
+    text-transform: lowercase;
+    font-weight: bold;
+}
+
+pre {
+    line-height: 1.25em;
+    padding: 0.25em;
+    margin: 0;
+    background-color: #efefef;
+}
+
+.task-name{
+	text-align: center;
+}
+
+.hidden{
+	display: none;
+}
+
+.container{
+	position: fixed;
+	top: 20%;
+	z-index: 2;
+	width:40%;
+	max-width: 960px;
+	min-width: 600px;
+	overflow: hidden;
+	background: #aaa;
+	margin: 0 auto;
+	left: 0;
+	right: 0;
+	padding: 30px 0;
+}
