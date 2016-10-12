@@ -4,9 +4,10 @@ Unittests based on **CxxTest**. The goal is to facilitate automatic grading of s
 
 ## Prerequisite
 
-Installed **Python** and **ply** package.
+Installed **Python** with packages **ply**, **pytest**:
+`sudo pip install ply pytest`.
 
-## Installation
+## Installation C++ Unittests
 
 1. Download and unpack CxxTest.
 
@@ -40,6 +41,11 @@ Installed **Python** and **ply** package.
 4. Run the compiled test:
 
 *./bin/runner*
+
+## Quickstart
+In order to run python tests please use _pytest_ facilities.
+
+For example: `py.test src/pyexample/test_labs.py`
 
 ## Resources
 
