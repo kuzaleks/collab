@@ -1,2 +1,7 @@
+# Project
 bin/
 *~
+
+# Python
+*.cache/
+*__pycache__/
