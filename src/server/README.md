@@ -1,30 +1,26 @@
 # Task Check System(TCS)
-
-
 ### Installation
-
 TCS requires [Python 2](https://www.python.org/downloads/).
-
 TCS work with [SQLite](https://sqlite.org/).
-
 #### TCS installation
-
 You need clone the repository.
+Create database
+```sh
+# chmod +x ./db_create.py
+$ ./db_create.py
+```
 
 Then navigate into the folder, and run:
-
 ```sh
 # chmod +x ./run.py
 $ ./run.py
 ```
-
 ### Todos
 	For Tascher and Admin:
 	 - Add task
 	 - Edit task
 	 - Add student
-
-### Hierarchy
+	 ### Hierarchy
 .
 ├── app - folder with our server's heart
 │   ├── forms.py - all forms definition
