@@ -1,2 +1,5 @@
-bin/
-*~
+/**/*.pyc
+src/server/tmp
+src/server/uploads
+src/server/app.db
+src/server/app/templates/tasks

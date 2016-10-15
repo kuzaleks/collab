@@ -1,6 +1,27 @@
 <h3>The task isn't exist at the moment</h3>
 {% if g.user.is_prepod() %}
 <h2>You are a teacher. So you can add the task.</h2>
-<!-- TODO: the form -->
-<h3>(here you will see a form to add the task)</h3>
+
+<form method="POST">
+	{{conditionForm.hidden_tag()}}
+	<h3>Name:</h3>
+	{{conditionForm.name}}
+
+    {% for error in conditionForm.errors.name %}
+    <span style="color: red;">[{{error}}]</span>
+    {% endfor %}<br>
+
+	<h3>Condition:</h3>
+	<div class="condition">
+		{{conditionForm.condition}}
+	</div>
+
+
+    {% for error in conditionForm.errors.condition %}
+    <span style="color: red;">[{{error}}]</span>
+    {% endfor %}<br>
+	
+	<p><input type="submit" value="Add"></p>
+</form>
+
 {% endif %}
