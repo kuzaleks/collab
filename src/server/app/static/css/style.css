@@ -54,3 +54,9 @@ pre {
 	right: 0;
 	padding: 30px 0;
 }
+
+.condition textarea{
+	width: 100%;
+	min-height: 60%;
+	padding: 10px;
+}

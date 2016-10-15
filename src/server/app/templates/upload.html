@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% include condition %}
 
 {% if task_exist %}
+
+{% include condition %}
+
 <table>
     <tbody>
         <tr>
@@ -37,6 +39,10 @@
         </tr>
     </tbody>
 </table>
+{% elif g.user.is_prepod() %}
+
+{% include "add_task.html" %}
+
 {% endif %}
 
 {% endblock %}
