@@ -8,6 +8,7 @@ from utils import save, check_task, path_generate, get_status, users_tasks, clea
 from config import STATUS, ROLE_USER, ROLE_PREPOD, ROLE_ADMIN
 from module import merge, biggest_lab_length
 from os.path import isfile
+from template import task_generate
 
 # TODO: sort by column at all_users page
 
@@ -133,6 +134,8 @@ def choose_task(lab_num):
 @login_required
 def upload(lab_num, task):
     id = Task.query.filter_by(lab_num=lab_num, num=task).first().id
+    filepath = "tasks/" + str(id) + ".html"
+    full_filepath = "app/templates/" + filepath
 
     form = TaskSendForm()
     conditionForm = ConditionForm()
@@ -156,13 +159,16 @@ def upload(lab_num, task):
 
     # on task add
     if conditionForm.validate_on_submit():
-        # TODO: add task
-        pass
+        task_text = task_generate(
+            name = conditionForm.name.data,
+            text = conditionForm.condition.data)
+        f = open(full_filepath, 'w')
+        f.write(task_text)
+        f.close()
 
-    filepath = "tasks/" + str(id) + ".html"
     task_exist = True
 
-    if not isfile("app/templates/" + filepath):
+    if not isfile(full_filepath):
         task_exist = False
     
     return render_template('upload.html',
