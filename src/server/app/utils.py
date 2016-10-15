@@ -57,7 +57,7 @@ def get_first(iterable, default=None):
 def users_tasks(cart):
 	user = User.query.filter_by(cart = cart).first()
 	
-	print user
+	print user.fname, user.lname, user.pname
 	name = " ".join([user.lname, user.fname, user.pname])
 	attempts = user.attempts
 
@@ -89,8 +89,8 @@ lname = "Teacher\'s last name",
 pname = "Teacher\'s patronymic")
 
 
-user = User(cart = 1521080,fname = "Kirill",lname = "Schastny",pname = "Andreevich",course = 2,group = 6,variant = 3, role=0)
-user1 = User(cart = 1521107,fname = "Evgeniy",lname = "Saigak",pname = "Alekseevich",course = 2,group = 9,variant = 7, role=0)
+user1 = User(cart = 1521080,fname = "Kirill",lname = "Schastny",pname = "Andreevich",course = 2,group = 6,variant = 3, role=0)
+user2 = User(cart = 1521107,fname = "Evgeniy",lname = "Saigak",pname = "Alekseevich",course = 2,group = 9,variant = 7, role=0)
 
 lab = Lab(difficulty = 0, num = 1, name = "if")
 
@@ -123,6 +123,7 @@ task32 = Task(num = 3, lab_num = 4)
 
 db.session.add(user)
 db.session.add(user1)
+db.session.add(user2)
 db.session.add(lab)
 db.session.add(task0)
 db.session.add(task01)

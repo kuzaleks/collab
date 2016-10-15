@@ -1,13 +1,14 @@
 from flask import render_template, flash, redirect, session, url_for, request, g, request
 from flask.ext.login import login_user, logout_user, current_user, login_required, UserMixin
 from app import app, db, lm
-from forms import LoginForm, TaskSendForm
+from forms import LoginForm, TaskSendForm, ConditionForm
 from models import Lab, User, Task, Attempt
 from datetime import datetime
 from utils import save, check_task, path_generate, get_status, users_tasks, clear_dir, dirs_create
 from config import STATUS, ROLE_USER, ROLE_PREPOD, ROLE_ADMIN
 from module import merge, biggest_lab_length
 from os.path import isfile
+from template import task_generate
 
 # TODO: sort by column at all_users page
 
@@ -87,7 +88,7 @@ def after_login(user, number):
 @app.route('/all_attempts')
 @login_required
 def all_attempts():
-    attempts = Attempt.query.all()
+    attempts = Attempt.query.filter_by(user_id = g.user.id).all()
     if attempts == None:
         flash('Tries not found.')
         return redirect(url_for('index'))
@@ -132,7 +133,14 @@ def choose_task(lab_num):
 @app.route('/upload/<int:lab_num>/<int:task>', methods=('GET', 'POST'))
 @login_required
 def upload(lab_num, task):
+    id = Task.query.filter_by(lab_num=lab_num, num=task).first().id
+    filepath = "tasks/" + str(id) + ".html"
+    full_filepath = "app/templates/" + filepath
+
     form = TaskSendForm()
+    conditionForm = ConditionForm()
+
+    # on new attempt
     if form.validate_on_submit():
         folderpath = path_generate(lab_num, task, g.user.variant, g.user.cart)
         files = request.files.getlist("task")
@@ -149,21 +157,29 @@ def upload(lab_num, task):
         db.session.add(attempt)
         db.session.commit()
 
-    id = Task.query.filter_by(lab_num=lab_num, num=task).first().id
-    filepath = "tasks/" + str(id) + ".html"
+    # on task add
+    if conditionForm.validate_on_submit():
+        task_text = task_generate(
+            name = conditionForm.name.data,
+            text = conditionForm.condition.data)
+        f = open(full_filepath, 'w')
+        f.write(task_text)
+        f.close()
+
     task_exist = True
 
-    if not isfile("app/templates/" + filepath):
-        filepath = "add_task.html"
+    if not isfile(full_filepath):
         task_exist = False
     
     return render_template('upload.html',
         attempts = Attempt.query.filter_by(user_id = g.user.id, lab_num = lab_num, task_num = task).all()[::-1],
         user = g.user,
         form = form,
+        task_id = id,
         get_status = get_status,
         condition = filepath,
-        task_exist = task_exist)
+        task_exist = task_exist,
+        conditionForm = conditionForm)
 
 @app.errorhandler(404)
 def not_found_error(error):
