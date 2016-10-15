@@ -46,7 +46,9 @@
                 var elem = dates[i]
                 
                 var old_date = new Date(elem.innerHTML)
-                // TODO: apply GMT to old_date
+
+                old_date.setTime(old_date.getTime() - (old_date.getTimezoneOffset()*60*1000))
+                
                 old_date = new Date(old_date).toISOString()
                 
                 elem.innerHTML = change_format(old_date)
