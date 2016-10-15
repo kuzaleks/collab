@@ -87,7 +87,7 @@ def after_login(user, number):
 @app.route('/all_attempts')
 @login_required
 def all_attempts():
-    attempts = Attempt.query.all()
+    attempts = Attempt.query.filter_by(user_id = g.user.id).all()
     if attempts == None:
         flash('Tries not found.')
         return redirect(url_for('index'))
