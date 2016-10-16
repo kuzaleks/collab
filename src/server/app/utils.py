@@ -42,7 +42,7 @@ def check_task(folderpath):
 
 def get_status(code):
 	if code == None:
-		return 0
+		return "None"
 	for key, value in STATUS.iteritems():
 		if value == code:
 			return key

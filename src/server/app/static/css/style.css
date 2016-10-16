@@ -48,7 +48,7 @@ pre {
 	max-width: 960px;
 	min-width: 600px;
 	overflow: hidden;
-	background: #aaa;
+	background: rgb(226, 226, 226);
 	margin: 0 auto;
 	left: 0;
 	right: 0;
@@ -59,4 +59,25 @@ pre {
 	width: 100%;
 	min-height: 60%;
 	padding: 10px;
+}
+
+.status {
+	padding: 12px 11px;
+	text-align: center;
+	width: 70px;
+	font-size: large;
+}
+
+.status-none{
+	background: rgba(167, 167, 167, 0.55);
+}
+
+.status-success{
+	background: rgba(0, 255, 25, 0.54);
+}
+
+.status-compileerror,
+.status-runtimeerror,
+.status-incorrectanswer{
+	background: rgba(255, 0, 0, 0.54);
 }

@@ -2,7 +2,9 @@
 
 {% block content %}
 <h1>User: {{user.fname}} {{user.lname}}</h1>
-<h4>Course: {{user.course}} Group: {{user.group}}</h4>
+{% if user.course and user.group %}
+	<h4>Course: {{user.course}} Group: {{user.group}}</h4>
+{% endif %}
 </p>
 <div>
     {% include 'labtask_table.html' %}

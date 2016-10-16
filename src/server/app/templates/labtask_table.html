@@ -16,7 +16,7 @@
 						{{lab}}
 					</td>
 					{% for task in new_table[lab] %}
-						<td>
+						<td class="status status-{{get_status(task).lower()}}">
 							{{get_status(task)}}
 						</td>
 					{% endfor %}
