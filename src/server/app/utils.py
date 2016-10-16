@@ -57,7 +57,6 @@ def get_first(iterable, default=None):
 def users_tasks(cart):
 	user = User.query.filter_by(cart = cart).first()
 	
-	print user.fname, user.lname, user.pname
 	name = " ".join([user.lname, user.fname, user.pname])
 	attempts = user.attempts
 
