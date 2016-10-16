@@ -6,13 +6,15 @@
 </p>
 <div>
     {% include 'labtask_table.html' %}
-	<h3>Attempts:</h3>
-    <ol>
-    {% for attempt in attempts %}
-        <li>
-            {% include 'attempt.html' %}
-        </li><br>
-    {% endfor %}
-    </ol>
+    {% if attempts %}
+		<h3>Attempts:</h3>
+	    <ol>
+	    {% for attempt in attempts %}
+	        <li>
+	            {% include 'attempt.html' %}
+	        </li><br>
+	    {% endfor %}
+	    </ol>
+	{% endif %}
 </div>
 {% endblock %}

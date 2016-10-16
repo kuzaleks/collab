@@ -26,6 +26,7 @@
                         <p><input type="submit" value="Upload"></p>
                     </form>
                 </td>
+                {% if attempts %}
                 <td>
                     <h1>Attempts:</h1>
                     <ol>
@@ -36,6 +37,7 @@
                     {% endfor %}
                     </ol>
                 </td>
+                {% endif %}
             </tr>
         </tbody>
     </table>
