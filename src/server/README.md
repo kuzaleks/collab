@@ -11,6 +11,12 @@ TCS work with [SQLite](https://sqlite.org/).
 
 You need clone the repository.
 
+Create database
+```sh
+# chmod +x ./db_create.py
+$ ./db_create.py
+```
+
 Then navigate into the folder, and run:
 
 ```sh
@@ -19,8 +25,7 @@ $ ./run.py
 ```
 
 ### Todos
-	For Tascher and Admin:
-	 - Add task
+	For Teacher and Admin:
 	 - Edit task
 	 - Add student
 
