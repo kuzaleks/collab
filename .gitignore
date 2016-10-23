@@ -3,5 +3,6 @@ bin/
 *~
 
 # Python
+dev/
 *.cache/
 *__pycache__/
