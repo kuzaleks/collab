@@ -28,9 +28,10 @@ def generic_test_lab(path_to_src, input_args, expected_output):
     out, err = task.communicate(
         input="\n".join(str(arg) for arg in input_args)
     )
+    actual_result = out.split()
         
-    assert out.strip() == expected_output
+    assert actual_result[-1] == expected_output
 
 
 def test_sample_lab():
-    generic_test_lab('examples_of_labs/sample.cpp', [1, 2], '3')
+    generic_test_lab('examples_of_labs/sample.cpp', [10, 2], '12')
