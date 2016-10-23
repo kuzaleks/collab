@@ -2,11 +2,14 @@
 
 {% block content %}
 <h1>Choose Task</h1>
-<ul>
-    {% for task in tasks %}
-        <li>
-            <a href="/upload/{{lab_num}}/{{task.num}}">{{ task.num }}. {{ task.name }} </a>
-        </li>
+<div class="lab-task-table">
+    {% for lab in table %}
+    	<div class="lab">
+	    	<h3>{{lab.name}}</h3>
+		    {% for task in table[lab] %}
+				<a class="task" href="/task/{{ task.id }}">{{ task.num }}</a>
+		    {% endfor %}
+    	</div>
     {% endfor %}
-</ul>
+</div>
 {% endblock %}

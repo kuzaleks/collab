@@ -49,6 +49,9 @@ class Lab(db.Model):
 	def __repr__(self):
 		return '<Lab %r>' % (self.id)
 
+	def __gt__(self, lab2):
+		return self.num > lab2.num
+
 class Task(db.Model):
 	# text at app/templates/tasks/{{task.id}}.html
 	id = db.Column(db.Integer, primary_key = True)

@@ -81,3 +81,30 @@ pre {
 .status-incorrectanswer{
 	background: rgba(255, 0, 0, 0.54);
 }
+
+.lab-task-table h3{
+	margin: 10px;
+}
+
+.lab-task-table .task{
+	margin: 0;
+	border: 1px solid black;
+	display: inline-block;
+	background: #8C9CDE;
+	height: 50px;
+	width: 50px;
+	text-align: center;
+	line-height: 50px;
+	color: black;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.lab-task-table .lab{
+	padding: 10px;
+	margin: 10px;
+	display: block;
+	background: #81EC62;
+	width: 100%;
+	padding-bottom: 20px; 
+}

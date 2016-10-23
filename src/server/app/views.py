@@ -6,11 +6,10 @@ from models import Lab, User, Task, Attempt
 from datetime import datetime
 from utils import save, check_task, path_generate, get_status, users_tasks, clear_dir, dirs_create
 from config import STATUS, ROLE_USER, ROLE_PREPOD, ROLE_ADMIN
-from module import merge, biggest_lab_length
+from module import merge, biggest_lab_length, merge_obj
 from os.path import isfile
-from template import task_generate
-
-# TODO: sort by column at all_users page
+from template import task_generate, task_regenerate
+import collections
 
 @lm.user_loader
 def get_user(ident):
@@ -118,23 +117,23 @@ def all_users():
         table_width = table_width,
         users_tasks = users_tasks)
 
-@app.route('/upload')
+@app.route('/choose_task')
 @login_required
-def choose_lab():
-    labs = Lab.query.all()
-    return render_template('choose_lab.html', labs = labs)
+def choose_task():
+    table = merge_obj(Task.query.all(), Lab.query.all())
+    table = collections.OrderedDict(sorted(table.items()))
 
-@app.route('/upload/<int:lab_num>')
-@login_required
-def choose_task(lab_num):
-    tasks = Task.query.filter_by(lab_num = lab_num)
-    return render_template('choose_task.html', lab_num = lab_num, tasks = tasks)
+    return render_template('choose_task.html', table = table)
 
-@app.route('/upload/<int:lab_num>/<int:task>', methods=('GET', 'POST'))
+@app.route('/task/<int:task_id>', methods=('GET', 'POST'))
 @login_required
-def upload(lab_num, task):
-    id = Task.query.filter_by(lab_num=lab_num, num=task).first().id
-    filepath = "tasks/" + str(id) + ".html"
+def task(task_id):
+    task = Task.query.filter_by(id = task_id).first()
+
+    if not task:
+        return redirect('/choose_task')
+    
+    filepath = "tasks/" + str(task_id) + ".html"
     full_filepath = "app/templates/" + filepath
 
     form = TaskSendForm()
@@ -142,7 +141,7 @@ def upload(lab_num, task):
 
     # on new attempt
     if form.validate_on_submit():
-        folderpath = path_generate(lab_num, task, g.user.variant, g.user.cart)
+        folderpath = path_generate(task.lab_num, task.num, g.user.variant, g.user.cart)
         files = request.files.getlist("task")
         dirs_create(folderpath)
         clear_dir(folderpath)
@@ -152,13 +151,14 @@ def upload(lab_num, task):
             timestamp = datetime.utcnow(), 
             author = g.user, 
             status = check_task(folderpath),
-            lab_num = lab_num,
-            task_num = task)
+            lab_num = task.lab_num,
+            task_num = task.num)
         db.session.add(attempt)
         db.session.commit()
 
     # on task add
     if conditionForm.validate_on_submit():
+        # save condition to file
         task_text = task_generate(
             name = conditionForm.name.data,
             text = conditionForm.condition.data)
@@ -171,15 +171,67 @@ def upload(lab_num, task):
     if not isfile(full_filepath):
         task_exist = False
     
-    return render_template('upload.html',
-        attempts = Attempt.query.filter_by(user_id = g.user.id, lab_num = lab_num, task_num = task).all()[::-1],
+    return render_template('task.html',
+        attempts = Attempt.query.filter_by(user_id = g.user.id, lab_num = task.lab_num, task_num = task.num).all()[::-1],
         user = g.user,
         form = form,
-        task_id = id,
+        task_id = task_id,
         get_status = get_status,
         condition = filepath,
         task_exist = task_exist,
         conditionForm = conditionForm)
+
+@app.route('/add_task', methods=('GET', 'POST'))
+@login_required
+def add_task():
+    conditionForm = ConditionForm()
+    id = request.args.get('id')
+
+    is_exist = False
+    if id:
+        is_exist = True
+        task = Task.query.filter_by(id = id).first()
+    else:
+        is_exist = False
+        task = Task()
+    
+    filepath = "tasks/" + str(id) + ".html"
+    full_filepath = "app/templates/" + filepath
+
+    if conditionForm.validate_on_submit():
+        # save condition to file
+        task.lab_num = conditionForm.lab.data
+        task.num = conditionForm.task.data
+        db.session.add(task)
+        db.session.commit()
+
+        task_text = task_generate(
+            name = conditionForm.name.data,
+            text = request.form['condition'])
+        f = open(full_filepath, 'w')
+        f.write(task_text)
+        f.close()
+
+    if is_exist:
+        text = ""
+        name = ""
+        try:
+            f = open(full_filepath, 'r')
+            text = f.read()
+            f.close()
+            name, text = task_regenerate(text)
+        except Exception as e:
+            pass # no file
+
+        return render_template('add_task.html', 
+            conditionForm = conditionForm,
+            lab = task.lab_num,
+            num = task.num,
+            name = name,
+            text = text)
+    else:
+        return render_template('add_task.html', 
+            conditionForm = conditionForm)
 
 @app.errorhandler(404)
 def not_found_error(error):
@@ -190,20 +242,3 @@ def internal_error(error):
     db.session.rollback()
     return render_template('500.html'), 500
 
-'''
-
-Admin:
-    Add task
-    Edit task
-    Watch students table
-        ...
-        cart    name    sname   ...
-        /\(on click)
-            ...
-            try[i]: task_num    status  ...
-            ...
-        ...
-    Watch table for each student
-    Add student
-
-'''
