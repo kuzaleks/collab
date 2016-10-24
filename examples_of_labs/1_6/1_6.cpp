@@ -4,7 +4,7 @@ using namespace std;
 
 int main()
 {
-	unsigned long n;
+	long n;
 	cin>>n;
 
 	if ((n & 1) > 0)
@@ -15,12 +15,13 @@ int main()
 		cout << '1' << endl;
 	else
 		cout << '0' << endl;
-	if ((n & (1 << 15)) > 0)
+	if ((n & (1 << 7)) > 0)
 		cout << '1' << endl;
 	else
 		cout << '0' << endl;
 
-	cout << ((n ^ (1 << 1)) ^ (1 << 10)) << endl;
+	long inv = (n ^ (1 << 1)) ^ (1 << 15);
+	cout << inv << endl;
 
     return 0;
 }
