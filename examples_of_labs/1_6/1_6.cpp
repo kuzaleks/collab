@@ -4,24 +4,22 @@ using namespace std;
 
 int main()
 {
-	long n;
-	cin>>n;
+    int number;
+    cin >> number;
+    unsigned char n = static_cast<char>(number);
+    //cin >> n;
 
-	if ((n & 1) > 0)
-		cout << '1' << endl;
-	else
-		cout << '0' << endl;
-	if ((n & (1 << 1)) > 0)
-		cout << '1' << endl;
-	else
-		cout << '0' << endl;
-	if ((n & (1 << 7)) > 0)
-		cout << '1' << endl;
-	else
-		cout << '0' << endl;
+    if ((n & 1) > 0)
+        cout << '1' << '\n';
+    else
+        cout << '0' << '\n';
+    if ((n & (1 << 7)) > 0)
+        cout << '1' << '\n';
+    else
+        cout << '0' << '\n';
 
-	long inv = (n ^ (1 << 1)) ^ (1 << 15);
-	cout << inv << endl;
+    unsigned char inversedN = (n ^ (1 << 2)) ^ (1 << 4);
+    cout << inversedN + 0 << '\n';
 
     return 0;
 }
