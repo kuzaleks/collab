@@ -1,3 +1,5 @@
+"""
+"""
 
 import os
 import subprocess
@@ -47,4 +49,11 @@ def generic_test_lab(path_to_src, input_args, expected_output):
 
 @pytest.mark.parametrize('indata,expected', variants_data, ids=variants)
 def test_sample_lab(indata, expected):
+    """Get data from different variants and pass them to test.
+    Run py.test -k <variant> path/to/tests.py
+
+    Please visit 
+    http://doc.pytest.org/en/latest/example/parametrize.html#different-options-for-test-ids
+    for details.
+    """
     generic_test_lab(path_to_lab, indata, expected)
