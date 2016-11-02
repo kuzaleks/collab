@@ -1,9 +1,23 @@
+"""
+"""
 
 import os
 import subprocess
 import sys
 
 from subprocess import check_output, Popen, PIPE
+
+import pytest
+
+
+path_to_lab = 'examples_of_labs/sample_plus.cpp'
+
+variants_data = [
+    ([10, 2], '12'),
+    ([10, 2], '8'),
+]
+
+variants = ["1", "2"]
 
 
 def generic_test_lab(path_to_src, input_args, expected_output):
@@ -33,5 +47,13 @@ def generic_test_lab(path_to_src, input_args, expected_output):
     assert actual_result[-1] == expected_output
 
 
-def test_sample_lab():
-    generic_test_lab('examples_of_labs/sample.cpp', [10, 2], '12')
+@pytest.mark.parametrize('indata,expected', variants_data, ids=variants)
+def test_sample_lab(indata, expected):
+    """Get data from different variants and pass them to test.
+    Run py.test -k <variant> path/to/tests.py
+
+    Please visit 
+    http://doc.pytest.org/en/latest/example/parametrize.html#different-options-for-test-ids
+    for details.
+    """
+    generic_test_lab(path_to_lab, indata, expected)
