@@ -1,0 +1,72 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<form method="POST">
+	{{user_form.hidden_tag()}}
+	
+	<table>
+		<tbody>
+			<tr>
+				<td><h4>fname:</h4></td>
+				<td>
+					{{user_form.fname(value=fname)}}
+					{% for error in user_form.errors.fname %}
+				    	<span style="color: red;">[{{error}}]</span>
+				    {% endfor %}<br>
+				</td>
+			</tr>
+			<tr>
+				<td><h4>lname:</h4></td>
+				<td>
+					{{user_form.lname(value=lname)}}
+					{% for error in user_form.errors.lname %}
+				    	<span style="color: red;">[{{error}}]</span>
+				    {% endfor %}<br>
+				</td>
+			</tr>
+			<tr>
+				<td><h4>pname:</h4></td>
+				<td>
+					{{user_form.pname(value=pname)}}
+					{% for error in user_form.errors.pname %}
+				    	<span style="color: red;">[{{error}}]</span>
+				    {% endfor %}<br>
+				</td>
+			</tr>
+			<tr>
+				<td><h4>course:</h4></td>
+				<td>
+					{{user_form.course(value=course)}}
+					{% for error in user_form.errors.course %}
+				    	<span style="color: red;">[{{error}}]</span>
+				    {% endfor %}<br>
+				</td>
+			</tr>
+			<tr>
+				<td><h4>group:</h4></td>
+				<td>
+					{{user_form.group(value=group)}}
+					{% for error in user_form.errors.group %}
+				    	<span style="color: red;">[{{error}}]</span>
+				    {% endfor %}<br>
+				</td>
+			</tr>
+			<tr>
+				<td><h4>variant:</h4></td>
+				<td>
+					{{user_form.variant(value=variant)}}
+					{% for error in user_form.errors.variant %}
+				    	<span style="color: red;">[{{error}}]</span>
+				    {% endfor %}<br>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<p><input type="submit" value="Add"></p>
+
+</form>
+
+{% endblock %}

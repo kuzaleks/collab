@@ -2,6 +2,9 @@
 
 {% block content %}
 <h1>User: {{user.fname}} {{user.lname}}</h1>
+{% if g.user.is_prepod() %}
+<a href="/edit?id={{user.cart}}">EDIT</a>
+{% endif %}
 {% if user.course and user.group %}
 	<h4>Course: {{user.course}} Group: {{user.group}}</h4>
 {% endif %}

@@ -15,13 +15,14 @@
 	<tbody>
 		{% for user in users %}
 			<tr>
-				<td onclick="show({{user.cart}});">{{user.cart}}</td>
+				<td><a href="/user/{{user.cart}}">{{user.cart}}</a></td>
 				<td>{{user.fname}}</td>
 				<td>{{user.lname}}</td>
 				<td>{{user.pname}}</td>
 				<td>{{user.course}}</td>
 				<td>{{user.group}}</td>
 				<td>{{user.variant}}</td>
+				<td onclick="show({{user.cart}});">TABLE</td>
 
 			</tr>
 		{% endfor %}

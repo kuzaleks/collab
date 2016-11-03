@@ -14,3 +14,13 @@ class ConditionForm(Form):
 	lab = TextField('lab', validators = [Required()])
 	task = TextField('task', validators = [Required()])
 	name = TextField('name')
+
+class UserUpdateForm(Form):
+	fname = TextField('fname', validators = [Required()])
+	lname = TextField('lname', validators = [Required()])
+	pname = TextField('pname', validators = [Required()])
+
+	course = TextField('course', validators = [Required()])
+	group = TextField('group', validators = [Required()])
+	
+	variant = TextField('variant', validators = [Required()])

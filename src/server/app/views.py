@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, session, url_for, request, g, request
 from flask.ext.login import login_user, logout_user, current_user, login_required, UserMixin
 from app import app, db, lm
-from forms import LoginForm, TaskSendForm, ConditionForm
+from forms import LoginForm, TaskSendForm, ConditionForm, UserUpdateForm
 from models import Lab, User, Task, Attempt
 from datetime import datetime
 from utils import save, check_task, path_generate, get_status, users_tasks, clear_dir, dirs_create
@@ -180,6 +180,37 @@ def task(task_id):
         condition = filepath,
         task_exist = task_exist,
         conditionForm = conditionForm)
+
+@app.route('/edit', methods=('GET', 'POST'))
+@login_required
+def edit():
+    user_form = UserUpdateForm()
+    id = request.args.get('id')
+    user = User.query.filter_by(cart = id).first()
+    
+    if user:
+        if  user_form.validate_on_submit():
+                user.fname = user_form.fname.data
+                user.lname = user_form.lname.data
+                user.pname = user_form.pname.data
+                user.course = user_form.course.data
+                user.group = user_form.group.data
+                user.variant = user_form.variant.data
+                db.session.add(user)
+                db.session.commit()
+                return redirect(url_for("user", cart=id))
+
+        return render_template('edit.html', 
+            user_form = user_form,
+            fname = user.fname,
+            lname = user.lname,
+            pname = user.pname,
+            course = user.course,
+            group = user.group,
+            variant = user.variant)
+    else:
+        return redirect(url_for("index"))
+
 
 @app.route('/add_task', methods=('GET', 'POST'))
 @login_required
