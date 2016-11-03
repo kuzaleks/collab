@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<a href="/add_task?id={{task_id}}"><input type="button" value="Edit"></a>
+{% if task_exist %}
+
+{% include condition %}
+
+<table>
+    <tbody>
+        <tr>
+            <td>
+                <h1>Upload task</h1>
+                <form method="POST" enctype="multipart/form-data">
+                    {{form.hidden_tag()}}
+                    <p>
+                        <table>
+                            <tbody>
+                                <tr>{{form.task(multiple="multiple")}}</tr>
+                            </tbody>
+                        </table>
+                        {% for error in form.errors.task %}
+                        <span style="color: red;">[{{error}}]</span>
+                        {% endfor %}<br>
+                    </p>
+                    <p><input type="submit" value="Upload"></p>
+                </form>
+            </td>
+            <td>
+                {% if attempts %}
+                <h1>Attempts:</h1>
+                <ol>
+                {% for attempt in attempts %}
+                    <li>
+                        {% include 'attempt.html' %}
+                    </li><br>
+                {% endfor %}
+                </ol>
+                {% endif %}
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% elif g.user.is_prepod() %}
+
+{% endif %}
+
+{% endblock %}

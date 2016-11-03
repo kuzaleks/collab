@@ -1,0 +1,27 @@
+<table style="margin-left: 50px;">
+	<thead>
+		{% for i in range(table_width+1) %}
+			{% if (i == 0) %}
+				<th>Lab</th>
+			{% else %}
+				<th>{{i}}</th>
+			{% endif %}
+		{% endfor %}
+	</thead>
+	<tbody>
+		{% with new_table = users_tasks(user.cart) %}
+			{% for lab in table %}
+				<tr>
+					<td>
+						{{lab}}
+					</td>
+					{% for task in new_table[lab] %}
+						<td class="status status-{{get_status(task).lower()}}">
+							{{get_status(task)}}
+						</td>
+					{% endfor %}
+				</tr>
+			{% endfor %}
+		{% endwith %}
+	</tbody>
+</table>

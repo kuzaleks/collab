@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Choose Lab</h1>
+<ul>
+    {% for lab in labs %}
+        <li>
+            <a href="/upload/{{ lab.num }}">{{ lab.num }}. {{ lab.name }} </a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
