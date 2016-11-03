@@ -181,6 +181,31 @@ def task(task_id):
         task_exist = task_exist,
         conditionForm = conditionForm)
 
+@app.route('/add_user', methods=('GET', 'POST'))
+@login_required
+def add_user():
+    user_form = UserUpdateForm()
+    cart = request.args.get('cart')
+    user = User.query.filter_by(cart = cart).first()
+    if not user:
+        user = User()
+        user.cart = cart
+    
+    if  user_form.validate_on_submit():
+            user.fname = user_form.fname.data
+            user.lname = user_form.lname.data
+            user.pname = user_form.pname.data
+            user.course = user_form.course.data
+            user.group = user_form.group.data
+            user.variant = user_form.variant.data
+            db.session.add(user)
+            db.session.commit()
+            return redirect(url_for("user", cart=cart))
+
+    return render_template('edit.html', 
+        user_form = user_form)
+
+
 @app.route('/edit', methods=('GET', 'POST'))
 @login_required
 def edit():

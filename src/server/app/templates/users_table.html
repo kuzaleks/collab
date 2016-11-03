@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
+<form action="/add_user" method="GET">
+	New user's cart:
+	<input type="text" name="cart">
+	<input type="submit" value="Add">
+</form>
 <table>
 	<thead>
 		<th>Cart</th>
