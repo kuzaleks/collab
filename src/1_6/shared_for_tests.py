@@ -30,7 +30,6 @@ def compile_lab(path_to_src):
     """Returns path to compiled file
     compiles using g++
     """
-    # ? maybe change '/temp' and '1_6.out' for more flexibility
     path_to_bin = os.path.join('/tmp', '1_6.out')
     print path_to_bin
     try:
@@ -44,5 +43,5 @@ def compile_lab(path_to_src):
         )
     except subprocess.CalledProcessError, er:
         print "Compilation stdout output:\n", er.output
-        raise# ? is it needed here
+        raise
     return path_to_bin
