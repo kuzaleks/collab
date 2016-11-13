@@ -280,12 +280,11 @@ def add_task():
         text = ""
         name = ""
         try:
-            f = open(full_filepath, 'r')
-            text = f.read()
-            f.close()
+            with open(full_filepath, 'r') as f:
+                text = f.read().decode('utf-8')
             name, text = task_regenerate(text)
         except Exception as e:
-            pass # no file
+            print "Reading file exception:", e
 
         return render_template('add_task.html', 
             conditionForm = conditionForm,

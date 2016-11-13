@@ -25,8 +25,7 @@ def task_generate(name, text):
 
 
 def task_regenerate(text):
-	text = text.decode('utf-8')
-	name = re.findall('<h2 class="task-name">(.*)</h2>', text.encode('utf-8'))[0]
+	name = re.findall('<h2 class="task-name">(.*)</h2>', text)[0]
 
 	text = re.sub('<h2 class="task-name">(.*)</h2>', '', text)
 	text = re.sub('<p>', '', text)
@@ -37,5 +36,5 @@ def task_regenerate(text):
 	text = re.sub('<pre>', '', text)
 	text = re.sub('</pre>', '</ft>', text)
 	text = re.sub('<.?div>', '', text)
-
+	
 	return name, text
