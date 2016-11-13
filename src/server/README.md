@@ -18,7 +18,6 @@ $ ./db_create.py
 ```
 
 Then navigate into the folder, and run:
-
 ```sh
 # chmod +x ./run.py
 $ ./run.py
@@ -64,3 +63,8 @@ $ ./run.py
 	├── README.md - Hello. It's me...
 	├── run.py - run server
 	└── tmp - temporary stuff
+
+### Errors
+
+ - /usr/bin/python^M: bad interpreter: No such file or directory
+ 	=> cat ./{FILE_NAME}.py | tr -d '\r' > ./{FILE_NAME}.py

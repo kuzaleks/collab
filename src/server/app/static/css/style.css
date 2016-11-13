@@ -108,3 +108,10 @@ pre {
 	width: 100%;
 	padding-bottom: 20px; 
 }
+
+.table-btn{
+	cursor: pointer;
+}
+.table-btn:hover{
+	color: green;
+}

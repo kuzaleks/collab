@@ -38,5 +38,4 @@ def task_regenerate(text):
 	text = re.sub('</pre>', '</ft>', text)
 	text = re.sub('<.?div>', '', text)
 
-	
 	return name, text

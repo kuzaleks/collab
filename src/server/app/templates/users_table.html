@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% block title %}Users{% endblock %}
+
 {% block content %}
 <form action="/add_user" method="GET">
 	New user's cart:
@@ -27,7 +29,7 @@
 				<td>{{user.course}}</td>
 				<td>{{user.group}}</td>
 				<td>{{user.variant}}</td>
-				<td onclick="show({{user.cart}});">TABLE</td>
+				<td class="table-btn" onclick="show({{user.cart}});">TABLE</td>
 
 			</tr>
 		{% endfor %}

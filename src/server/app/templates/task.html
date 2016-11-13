@@ -1,8 +1,13 @@
 {% extends "base.html" %}
 
+{% block title %}Task {{task_id}}{% endblock %}
+
 {% block content %}
 
+{% if g.user.is_prepod() %}
 <a href="/add_task?id={{task_id}}"><input type="button" value="Edit"></a>
+{% endif %}
+
 {% if task_exist %}
 
 {% include condition %}
@@ -13,14 +18,14 @@
             <td>
                 <h1>Upload task</h1>
                 <form method="POST" enctype="multipart/form-data">
-                    {{form.hidden_tag()}}
+                    {{taskSendForm.hidden_tag()}}
                     <p>
                         <table>
                             <tbody>
-                                <tr>{{form.task(multiple="multiple")}}</tr>
+                                <tr>{{taskSendForm.task(multiple="multiple")}}</tr>
                             </tbody>
                         </table>
-                        {% for error in form.errors.task %}
+                        {% for error in taskSendForm.errors.task %}
                         <span style="color: red;">[{{error}}]</span>
                         {% endfor %}<br>
                     </p>

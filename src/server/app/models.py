@@ -34,16 +34,16 @@ class User(db.Model, UserMixin):
 class Lab(db.Model):
 	id = db.Column(db.Integer, primary_key = True)
 
-	# PART_A or PART_B depends on difficulty
+	#: PART_A or PART_B depends on difficulty
 	difficulty = db.Column(db.Integer)
 
-	# Tasks at the lab
+	#: Tasks at the lab
 	tasks = db.relationship('Task', backref = 'lab', lazy = 'dynamic')
 	
-	# Number of the lab
+	#: Number of the lab
 	num = db.Column(db.Integer)
 
-	# Name of the lab
+	#: Name of the lab
 	name = db.Column(db.String(50))
 	
 	def __repr__(self):
@@ -58,10 +58,6 @@ class Task(db.Model):
 	
 	lab_num = db.Column(db.Integer, db.ForeignKey('lab.num'))
 	num = db.Column(db.Integer)
-
-	def next_num(self):
-		# TODO: get next task number at lab
-		pass
 	
 	def __repr__(self):
 		return '<Task %r>' % (self.id)

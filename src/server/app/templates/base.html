@@ -1,10 +1,7 @@
 <html>
   <head>
-    {% if title %}
-    <title>{{title}} - CheckSystem</title>
-    {% else %}
-    <title>CheckSystem</title>
-    {% endif %}
+    <title>{% block title %}{% endblock %} - CheckSystem</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link rel="stylesheet" href="../../static/css/style.css">
   </head>
   <body>
