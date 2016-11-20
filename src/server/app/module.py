@@ -4,7 +4,7 @@ def merge(tasks, labs):
 	for lab in labs:
 		result[lab.num] = []
 		for task in tasks:
-			if lab.num == task.lab_num: result[lab.num].append(task.num)
+			if lab.num == task.lab_num: result[lab.num].append(task.id)
 	return result
 
 # obj to obj

@@ -1,19 +1,45 @@
-{% extends "base.html" %}
+<html>
+  <head>
+    <title>Login - CheckSystem</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="../../static/css/style.css">
+  </head>
+  <body>
+    <div class="login-wrapper">
+        <form class="form-container" action="" method="post" name="login">
+            <div class="form-title"><h2>Авторизация</h2></div>
+            {{form.hidden_tag()}}
 
-{% block title %}Login{% endblock %}
+            <div class="form-title">Фамилия:</div>
+            <input class="form-field" type="text" name="lastname" /><br />
 
-{% block content %}
-<h1>Sign In</h1>
-<form action="" method="post" name="login">
-    {{form.hidden_tag()}}
-    <p>
-        Please enter your student's card number:<br>
-        {{form.number(size=80)}}
-        {% for error in form.errors.number %}
-        <span style="color: red;">[{{error}}]</span>
-        {% endfor %}<br>
-    </p>
-    <p>{{form.remember_me}} Remember Me</p>
-    <p><input type="submit" value="Sign In"></p>
-</form>
-{% endblock %}
+            <div class="form-title">Номер студенческого:</div>
+            <input class="form-field" type="text" name="number" /><br />
+
+            {% for error in form.errors.number %}
+            <span style="color: red;">[{{error}}]</span>
+            {% endfor %}<br>
+            
+
+            <div class="form-title">{{form.remember_me}} Запомнить меня</div>
+
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul>
+            {% for message in messages %}
+                <li class="error">{{ message }} </li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
+
+            <div class="submit-container">
+                <input class="submit-button" type="submit" value="Войти" />
+            </div>
+        </form>
+
+
+    </div>
+  </body>
+</html>
+

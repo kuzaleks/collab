@@ -162,8 +162,7 @@ def task(task_id):
             timestamp = datetime.utcnow(), 
             author = g.user, 
             status = check_task(folderpath),
-            lab_num = task.lab_num,
-            task_num = task.num)
+            task = task)
         db.session.add(attempt)
         db.session.commit()
 
@@ -178,7 +177,7 @@ def task(task_id):
     
     return render_template('task.html',
         user = g.user,
-        attempts = Attempt.query.filter_by(user_id = g.user.id, lab_num = task.lab_num, task_num = task.num).all()[::-1],
+        attempts = Attempt.query.filter_by(user_id = g.user.id, task = task).all()[::-1],
         task_id = task_id,
         get_status = get_status,
         condition = filepath,

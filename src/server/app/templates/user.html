@@ -3,18 +3,20 @@
 {% block title %}{{user.fname}} {{user.lname}}{% endblock %}
 
 {% block content %}
-<h1>User: {{user.fname}} {{user.lname}}</h1>
+<h1 class="page-title">{{user.fname}} {{user.lname}}</h1>
 {% if g.user.is_prepod() %}
 <a href="/edit?id={{user.cart}}">EDIT</a>
 {% endif %}
 {% if user.course and user.group %}
 	<h4>Course: {{user.course}} Group: {{user.group}}</h4>
+	<br>
 {% endif %}
 </p>
 <div>
     {% include 'labtask_table.html' %}
     {% if attempts %}
-		<h3>Attempts:</h3>
+		<h3 class="page-title small">Attempts:</h3>
+		<br>
 	    <ol>
 	    {% for attempt in attempts %}
 	        <li>

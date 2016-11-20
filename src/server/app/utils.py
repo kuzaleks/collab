@@ -65,8 +65,8 @@ def users_tasks(cart):
 	result = {}
 	for lab in lab_task:
 		result[lab] = []
-		for task in lab_task[lab]:
-			temp = attempts.filter_by(lab_num = lab, task_num = task).all()
+		for id in lab_task[lab]:
+			temp = attempts.filter_by(task_id = id).all()
 			cur_attempts = sorted( temp, key = lambda attempt: attempt.timestamp )[::-1]
 			attempt = get_first(cur_attempts)
 			if attempt:

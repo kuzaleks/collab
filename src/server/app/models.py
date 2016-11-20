@@ -58,6 +58,7 @@ class Task(db.Model):
 	
 	lab_num = db.Column(db.Integer, db.ForeignKey('lab.num'))
 	num = db.Column(db.Integer)
+	attempts = db.relationship('Attempt', backref = 'task', lazy = 'dynamic')
 	
 	def __repr__(self):
 		return '<Task %r>' % (self.id)
@@ -67,8 +68,7 @@ class Attempt(db.Model):
 	status = db.Column(db.Integer)
 	timestamp = db.Column(db.Integer)
 	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-	lab_num = db.Column(db.Integer)
-	task_num = db.Column(db.Integer)
-	
+	task_id = db.Column(db.Integer, db.ForeignKey('task.id'))
+
 	def __repr__(self):
 		return '<Attempt %r>' % (self.id)
