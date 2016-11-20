@@ -216,25 +216,25 @@ def add_user():
 @app.route('/edit', methods=('GET', 'POST'))
 @login_required
 def edit():
-    user_form = UserUpdateForm()
+    userForm = UserUpdateForm()
 
     id = request.args.get('id')
     user = User.query.filter_by(cart = id).first()
     
     if user:
-        if  user_form.validate_on_submit():
-                user.fname = user_form.fname.data
-                user.lname = user_form.lname.data
-                user.pname = user_form.pname.data
-                user.course = user_form.course.data
-                user.group = user_form.group.data
-                user.variant = user_form.variant.data
+        if  userForm.validate_on_submit():
+                user.fname = userForm.fname.data
+                user.lname = userForm.lname.data
+                user.pname = userForm.pname.data
+                user.course = userForm.course.data
+                user.group = userForm.group.data
+                user.variant = userForm.variant.data
                 db.session.add(user)
                 db.session.commit()
                 return redirect(url_for("user", cart=id))
 
         return render_template('edit.html', 
-            user_form = user_form,
+            userForm = userForm,
             fname = user.fname,
             lname = user.lname,
             pname = user.pname,
