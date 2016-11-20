@@ -51,13 +51,13 @@ def login():
     
     if form.validate_on_submit():
         session['remember_me'] = form.remember_me.data
-        user = User.query.filter_by(keyword = form.number.data).first()
+        user = User.query.filter_by(keyword = form.number.data, lname = form.lastname.data).first()
         
         if not user:
             try:
-                user = User.query.filter_by(cart = int(form.number.data)).first()
+                user = User.query.filter_by(cart = int(form.number.data), lname = form.lastname.data).first()
             except Exception as e:
-                # user not found
+                flash("User not found.")
                 return render_template('login.html', 
                     title = 'Sign In',
                     form = form)
@@ -72,7 +72,7 @@ def login():
 def after_login(user, number):
     if user is None:
         flash("User not found.")
-        return redirect(url_for('login')) 
+        return redirect(url_for('login'))
 
     remember_me = False
     if 'remember_me' in session:
@@ -251,10 +251,20 @@ def add_task():
         return redirect(url_for('index'))
     
     conditionForm = ConditionForm()
+    task = 0
     id = request.args.get('id')
+    lab_num = request.args.get('lab')
+    if lab_num:
+        try:
+            lab = Lab.query.filter_by(num = lab_num).first().add_task()
+            task = Task.query.all()[::-1][0]
+            id = task.id
+        except Exception as e:
+            print "Exception: ", e
 
     is_exist = bool(id)
-    task = Task.query.filter_by(id = id).first() or Task()
+
+    task = task or Task.query.filter_by(id = id).first() or Task()
     
     filepath = "tasks/" + str(id) + ".html"
     full_filepath = "app/templates/" + filepath
@@ -304,3 +314,4 @@ def internal_error(error):
     db.session.rollback()
     return render_template('500.html'), 500
 
+# TODO: chechbox pass/text login page

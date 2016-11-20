@@ -1,7 +1,45 @@
 *{margin: 0; padding: 0;}
 
+@font-face {
+    font-family: "B20SansSemiCondensed";
+    src: url("../fonts/B20SansSemiCondensed/B20SansSemiCondensed.eot");
+    src: url("../fonts/B20SansSemiCondensed/B20SansSemiCondensed.eot?#iefix")format("embedded-opentype"),
+    url("../fonts/B20SansSemiCondensed/B20SansSemiCondensed.woff") format("woff"),
+    url("../fonts/B20SansSemiCondensed/B20SansSemiCondensed.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+
+h1, h2, h3, h4, h5, th, td, a, span, p{
+	font-family: B20SansSemiCondensed;
+	color: white;
+}
+
+.mdl-button{
+	color: white !important;
+}
+
+.dialog-button{
+	position: fixed !important;
+	bottom: 20px;
+	right: 20px;
+}
+
+.mdl-dialog__title, .mdl-dialog__content span{
+	color: black;
+}
+
+.mdl-dialog{
+	margin: 0 auto;
+	position: fixed;
+}
+
 li{
 	list-style-type: none;
+}
+
+.users-table td, .users-table th{
+	padding: 5px;
 }
 
 .old-date{display: none;}
@@ -39,6 +77,8 @@ body>.wrapper{
 }
 
 .page-title, .task-name {
+	font-family: B20SansSemiCondensed;
+	color: white;
     font-size: 2.3em;
     padding: 0.25em;
     text-transform: uppercase;
@@ -79,11 +119,11 @@ pre {
 	max-width: 960px;
 	min-width: 600px;
 	overflow: hidden;
-	background: rgb(226, 226, 226);
+    background: linear-gradient(#08540B,#77A046);
 	margin: 0 auto;
 	left: 0;
 	right: 0;
-	padding: 30px 0;
+    padding: 30px 30px 30px 0;
 }
 
 .condition textarea{
@@ -119,9 +159,8 @@ pre {
 
 .lab-task-table .task{
 	margin: 0;
-	border: 1px solid black;
 	display: inline-block;
-	background: #8C9CDE;
+	background: khaki;
 	height: 50px;
 	width: 50px;
 	text-align: center;
@@ -129,13 +168,20 @@ pre {
 	color: black;
 	cursor: pointer;
 	text-decoration: none;
+
+    -webkit-box-shadow: 6px 5px 11px -1px rgba(0, 0, 0, 0.58);;
+    -moz-box-shadow: 6px 5px 11px -1px rgba(0, 0, 0, 0.58);;
+    box-shadow: 6px 5px 11px -1px rgba(0, 0, 0, 0.58);;
+}
+
+.lab-task-table .add-task{
+	background: lightgreen;
 }
 
 .lab-task-table .lab{
 	padding: 10px;
 	margin: 10px;
 	display: block;
-	background: #81EC62;
 	width: 100%;
 	padding-bottom: 20px; 
 }
@@ -181,7 +227,9 @@ header .wrapper li a span{
 }
 
 body{
-	background: rgba(248, 239, 228, 0.77);
+	background-image: url(../img/dark_embroidery.png); /* Путь к фоновому рисунку */
+	background-repeat: repeat;
+	/*background: rgba(248, 239, 228, 0.77);*/
 }
 /********************** LOGIN PAGE ***************************/
 .login-wrapper{

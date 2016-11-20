@@ -45,6 +45,11 @@ class Lab(db.Model):
 
 	#: Name of the lab
 	name = db.Column(db.String(50))
+
+	def add_task(self):
+		new_task = Task(num = len(self.tasks.all()) + 1, lab_num = self.num)
+		db.session.add(new_task)
+		db.session.commit()
 	
 	def __repr__(self):
 		return '<Lab %r>' % (self.id)

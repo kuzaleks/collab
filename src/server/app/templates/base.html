@@ -1,8 +1,9 @@
 <html>
   <head>
-    <title>{% block title %}{% endblock %} - CheckSystem</title>
+    <title>{% block title %}{% endblock %} | CheckSystem</title>
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link rel="stylesheet" href="../../static/css/style.css">
+    <link rel="stylesheet" href="../../static/css/material.min.css">
   </head>
   <body>
     <header>
@@ -11,30 +12,30 @@
                 <ul>
                     <li>
                         <a href="{{ url_for('index') }}">
-                            <span class="text">Home</span>
+                            <span class="text">Главная</span>
                         </a>
                     </li>
                     {% if g.user.is_authenticated %}
                     <li>
                         <a href="{{ url_for('choose_task') }}">
-                            <span class="text">Tasks</span>
+                            <span class="text">Задачи</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ url_for('user', cart = g.user.cart) }}">
-                            <span class="text">Your Page</span>
+                            <span class="text">Моя страница</span>
                         </a>
                     </li>
                     {% if g.user.is_prepod() %}
                         <li>
                             <a href="{{ url_for('all_users') }}">
-                                <span class="text">All Users</span>
+                                <span class="text">Все студенты</span>
                             </a>
                         </li>
                     {% endif %}
                     <li>
                         <a href="{{ url_for('all_attempts') }}">
-                            <span class="text">Attemps</span>
+                            <span class="text">Попытки</span>
                         </a>
                     </li>
                 </ul>
@@ -43,7 +44,7 @@
                 <ul>
                     <li>
                         <a href="{{ url_for('logout') }}">
-                            <span class="text">Logout</span>
+                            <span class="text">Выход</span>
                         </a>
                     </li>
                 {% endif %}

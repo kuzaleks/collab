@@ -5,17 +5,21 @@
 {% block content %}
 <h1 class="page-title">{{user.fname}} {{user.lname}}</h1>
 {% if g.user.is_prepod() %}
-<a href="/edit?id={{user.cart}}">EDIT</a>
+<a href="/edit?id={{user.cart}}">
+	<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+	  EDIT
+	</button>
+</a>
 {% endif %}
 {% if user.course and user.group %}
-	<h4>Course: {{user.course}} Group: {{user.group}}</h4>
+	<h4>Курс: {{user.course}} Группа: {{user.group}}</h4>
 	<br>
 {% endif %}
 </p>
 <div>
     {% include 'labtask_table.html' %}
     {% if attempts %}
-		<h3 class="page-title small">Attempts:</h3>
+		<h3 class="page-title small">Попытки:</h3>
 		<br>
 	    <ol>
 	    {% for attempt in attempts %}

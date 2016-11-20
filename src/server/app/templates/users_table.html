@@ -1,35 +1,52 @@
 {% extends "base.html" %}
 
-{% block title %}Users{% endblock %}
+{% block title %}Студенты{% endblock %}
 
 {% block content %}
-<form action="/add_user" method="GET">
-	New user's cart:
-	<input type="text" name="cart">
-	<input type="submit" value="Add">
-</form>
-<table>
+
+<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored dialog-button">
+	<i class="material-icons">+</i>
+</button>
+
+<dialog id="dialog" class="mdl-dialog">
+	<form action="/add_user" method="GET">
+		<h3 class="mdl-dialog__title">Добавить студента</h3>
+		<div class="mdl-dialog__content">
+			<span>Номер студенческого:</span>
+			<input type="text" name="cart">
+		</div>
+		<div class="mdl-dialog__actions">
+			<input type="submit" class="mdl-button" value="Добавить">
+			<button type="button" class="mdl-button">Закрыть</button>
+		</div>
+	</form>
+</dialog>
+
+
+<table class="users-table">
 	<thead>
-		<th>Cart</th>
-		<th>Surname</th>
-		<th>Name</th>
-		<th>Parent Name</th>
-		<th>Course</th>
-		<th>Group</th>
-		<th>Variant</th>
+		<th>Студенческий</th>
+		<th>Фамилия</th>
+		<th>Имя</th>
+		<th>Отчество</th>
+		<th>Курс</th>
+		<th>Группа</th>
+		<th>Вариант</th>
 	</thead>
 
 	<tbody>
 		{% for user in users %}
 			<tr>
 				<td><a href="/user/{{user.cart}}">{{user.cart}}</a></td>
-				<td>{{user.fname}}</td>
 				<td>{{user.lname}}</td>
+				<td>{{user.fname}}</td>
 				<td>{{user.pname}}</td>
 				<td>{{user.course}}</td>
 				<td>{{user.group}}</td>
 				<td>{{user.variant}}</td>
-				<td class="table-btn" onclick="show({{user.cart}});">TABLE</td>
+				<td>
+					<button class="mdl-button mdl-js-button mdl-button--raised" onclick="show({{user.cart}});">Таблица</button>
+				</td>
 
 			</tr>
 		{% endfor %}
@@ -42,6 +59,7 @@
 		</div>
 	</div>
 {% endfor %}
+
 <script>
 	var last;
 	function show(id){
@@ -52,5 +70,22 @@
 		}
 		last = current
 	}
+
+	(function() {
+		'use strict';
+		var dialogButton = document.querySelector('.dialog-button');
+		var dialog = document.querySelector('#dialog');
+		if (! dialog.showModal) {
+			dialogPolyfill.registerDialog(dialog);
+		}
+		dialogButton.addEventListener('click', function() {
+			dialog.showModal();
+		});
+		dialog
+			.querySelector('button:not([disabled])')
+			.addEventListener('click', function() {
+				dialog.close();
+			});
+	}());
 </script>
 {% endblock %}

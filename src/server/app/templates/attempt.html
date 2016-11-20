@@ -1,6 +1,6 @@
 <div style="margin-left: 50px;">
-	task: <a href="/task/{{attempt.task.id}}">{{attempt.task.lab_num}}/{{attempt.task.num}}</a> <br>
-	status: {{ get_status(attempt.status) }} <br> 
-	timestamp: <span class="old-date">{{attempt.timestamp}}</span> <br>
-	user: {{attempt.author.fname}} {{attempt.author.lname}} <br>
+	<p>Задача: <a href="/task/{{attempt.task.id}}">{{attempt.task.lab_num}}/{{attempt.task.num}}</a> <br>
+	Статус: {{ get_status(attempt.status) }} <br>
+	Время: <span class="old-date">{{attempt.timestamp}}</span> <br>
+	Студент: {{attempt.author.fname}} {{attempt.author.lname}}</p>
 </div>

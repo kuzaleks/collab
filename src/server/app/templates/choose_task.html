@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
-{% block title %}Choose Task{% endblock %}
+{% block title %}Выбор задачи{% endblock %}
 
 {% block content %}
-<h1 class="page-title">Choose Task</h1>
+<h1 class="page-title">Выбор задачи</h1>
 <div class="lab-task-table">
     {% for lab in table %}
     	<div class="lab">
@@ -11,6 +11,9 @@
 		    {% for task in table[lab] %}
 				<a class="task" href="/task/{{ task.id }}">{{ task.num }}</a>
 		    {% endfor %}
+		    {% if g.user.is_prepod() %}
+		    	<a class="task add-task" href="/add_task?lab={{lab.num}}">+</a>
+		    {% endif %}
     	</div>
     {% endfor %}
 </div>
