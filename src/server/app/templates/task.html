@@ -1,21 +1,23 @@
 {% extends "base.html" %}
-
 {% block title %}Задача {{task_id}}{% endblock %}
-
 {% block content %}
-
 {% if task_exist %}
-
 {% include condition %}
+{% endif %}
 
 {% if g.user.is_prepod() %}
 <a href="/add_task?id={{task_id}}">
     <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
-      EDIT
+        {% if task_exist %}
+            ИЗМЕНИТЬ
+        {% else %}
+            ДОБАВИТЬ
+        {% endif %}
     </button>
 </a>
 {% endif %}
 
+{% if task_exist %}
 <table>
     <tbody>
         <tr>
@@ -33,7 +35,7 @@
                         <span style="color: red;">[{{error}}]</span>
                         {% endfor %}<br>
                     </p>
-                    <p><input type="submit" value="Upload"></p>
+                    <p><input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" value="ОТПРАВИТЬ"></p>
                 </form>
             </td>
             <td>

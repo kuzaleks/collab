@@ -10,7 +10,7 @@
 	<table>
 		<tbody>
 			<tr>
-				<td><h4>fname:</h4></td>
+				<td><h4>Имя:</h4></td>
 				<td>
 					{{userForm.fname(value=fname if fname else "")}}
 					{% for error in userForm.errors.fname %}
@@ -19,7 +19,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td><h4>lname:</h4></td>
+				<td><h4>Фамилия:</h4></td>
 				<td>
 					{{userForm.lname(value=lname if lname else "")}}
 					{% for error in userForm.errors.lname %}
@@ -28,7 +28,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td><h4>pname:</h4></td>
+				<td><h4>Отчество:</h4></td>
 				<td>
 					{{userForm.pname(value=pname if pname else "")}}
 					{% for error in userForm.errors.pname %}
@@ -37,7 +37,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td><h4>course:</h4></td>
+				<td><h4>Курс:</h4></td>
 				<td>
 					{{userForm.course(value=course if course else "")}}
 					{% for error in userForm.errors.course %}
@@ -46,7 +46,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td><h4>group:</h4></td>
+				<td><h4>Группа:</h4></td>
 				<td>
 					{{userForm.group(value=group if group else "")}}
 					{% for error in userForm.errors.group %}
@@ -55,7 +55,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td><h4>variant:</h4></td>
+				<td><h4>Вариант:</h4></td>
 				<td>
 					{{userForm.variant(value=variant if variant else "")}}
 					{% for error in userForm.errors.variant %}

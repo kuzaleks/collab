@@ -19,10 +19,19 @@ h1, h2, h3, h4, h5, th, td, a, span, p{
 	color: white !important;
 }
 
+.dialog-button .material-icons, .mdl-dialog .mdl-button{
+	color: black !important;
+}
+
 .dialog-button{
 	position: fixed !important;
 	bottom: 20px;
 	right: 20px;
+}
+
+.task-add-btn{
+	float: right;
+    margin-bottom: 60px;
 }
 
 .mdl-dialog__title, .mdl-dialog__content span{
@@ -348,3 +357,4 @@ body{
    }
 
 /********************** LOGIN PAGE END ***************************/
+

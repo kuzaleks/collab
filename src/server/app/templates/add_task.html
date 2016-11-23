@@ -10,19 +10,19 @@
 	<table>
 		<tbody>
 			<tr>
-				<td><h4>lab:</h4></td>
+				<td><h5>Номер лабораторной работы:</h5></td>
 				<td>
 					{{conditionForm.lab(value=lab)}}
 				</td>
 			</tr>
 			<tr>
-				<td><h4>num:</h4></td>
+				<td><h5>Номер задачи:</h5></td>
 				<td>
 					{{conditionForm.task(value=num)}}
 				</td>
 			</tr>
 			<tr>
-				<td><h4>Name:</h4></td>
+				<td><h5>Название:</h5></td>
 				<td>
 					{{conditionForm.name(value=name)}}
 				</td>
@@ -30,7 +30,7 @@
 		</tbody>
 	</table>
 	
-	<h3>Condition:</h3>
+	<h3>Условие:</h3>
 	<div class="condition">
 		<textarea id="condition" name="condition">{{text}}</textarea>
 	</div>
@@ -39,10 +39,10 @@
     <span style="color: red;">[{{error}}]</span>
     {% endfor %}<br>
 
-    <input onclick='add("it")' type="button" value="Test Input">
-    <input onclick='add("ot")' type="button" value="Test Output">
+    <input onclick='add("it")' type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" value="Входной тест">
+    <input onclick='add("ot")' type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" value="Ответ на тест">
 	
-	<p><input type="submit" value="Add"></p>
+	<p class="task-add-btn"><input type="submit"  class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" value="ДОБАВИТЬ"></p>
 
 </form>
 
