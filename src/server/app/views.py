@@ -104,7 +104,8 @@ def after_login(user, cart):
 @login_required
 def user(cart):
 	user = User.query.filter_by(cart = cart).first()
-	if not user:
+
+	if not user or (g.user.is_prepod() and not user.get_group_obj() in g.user.groups):
 		return redirect(url_for('index'))        
 
 	table = merge(Task.query.all(), Lab.query.all())
@@ -131,9 +132,6 @@ def all_attempts():
 @login_required
 @prepod_only
 def all_users():
-	# if not g.user.is_prepod():
-	# 	flash('You are just user.')
-	# 	return redirect(url_for('index'))
 
 	users = [user for user in User.query.filter_by(role = ROLE_USER).all() if user.get_group_obj() in g.user.groups]
 
@@ -213,11 +211,8 @@ def edit():
 	cart = request.args.get('cart')
 	user = User.query.filter_by(cart = cart).first()
 	if not user:
-		# if g.user.is_prepod():
 		user = User()
 		user.cart = cart
-		# else:
-		# 	return redirect(url_for("index"))
 
 	groups = user.groups_to_string()
 	
@@ -336,5 +331,3 @@ def not_found_error(error):
 def internal_error(error):
 	db.session.rollback()
 	return render_template('500.html'), 500
-
-# TODO: chechbox pass/text login page
