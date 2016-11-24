@@ -135,7 +135,7 @@ def all_users():
 	# 	flash('You are just user.')
 	# 	return redirect(url_for('index'))
 
-	users = User.query.filter_by(role = ROLE_USER).all()
+	users = [user for user in User.query.filter_by(role = ROLE_USER).all() if user.get_group_obj() in g.user.groups]
 
 	table = merge(Task.query.all(), Lab.query.all())
 	table_width = biggest_lab_length(table)
@@ -282,14 +282,12 @@ def add_task():
 			if not conditionForm.validate_on_submit():
 				lab.add_task()
 			task = Task.query.all()[::-1][0]
-			print "ADDTASK:", task
 			id = task.id
 		except Exception as e:
 			print "Exception: ", e
 	else:
 		task = task or Task.query.filter_by(id = id).first() or Task()
 	
-	print "TASK:", task
 
 	filepath = "tasks/" + str(id) + ".html"
 	full_filepath = "app/templates/" + filepath

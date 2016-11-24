@@ -44,6 +44,10 @@ class User(db.Model, UserMixin):
 		if len(self.groups) == 1 and not self.is_prepod():
 			return self.groups[0].group_num
 
+	def get_group_obj(self):
+		if len(self.groups) == 1 and not self.is_prepod():
+			return self.groups[0]
+
 	def groups_to_string(self):
 		return ", ".join("%s/%s" % (group.course, group.group_num) for group in self.groups)
 
