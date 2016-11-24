@@ -11,8 +11,8 @@
 	</button>
 </a>
 {% endif %}
-{% if user.course and user.group %}
-	<h4>Курс: {{user.course}} Группа: {{user.group}}</h4>
+{% if user.get_course() and user.get_group() %}
+	<h4>Курс: {{user.get_course()}} Группа: {{user.get_group()}}</h4>
 	<br>
 {% endif %}
 </p>

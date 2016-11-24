@@ -4,60 +4,70 @@
 
 {% block content %}
 
+
+<!-- <form action="#">
+	<div class="mdl-textfield mdl-js-textfield">
+		<input class="mdl-textfield__input" type="text" id="sample1">
+		<label class="mdl-textfield__label" for="sample1">Text...</label>
+	</div>
+</form> -->
+
 <form method="POST">
 	{{userForm.hidden_tag()}}
 	
 	<table>
 		<tbody>
 			<tr>
-				<td><h4>Имя:</h4></td>
-				<td>
-					{{userForm.fname(value=fname if fname else "")}}
+				<td class="mdl-textfield mdl-js-textfield">
+				<label for="fname">Имя:</label>
+					{{userForm.fname(class_="mdl-textfield__input", value=fname if fname else "")}}
 					{% for error in userForm.errors.fname %}
 				    	<span style="color: red;">[{{error}}]</span>
 				    {% endfor %}<br>
 				</td>
 			</tr>
 			<tr>
-				<td><h4>Фамилия:</h4></td>
-				<td>
-					{{userForm.lname(value=lname if lname else "")}}
+				<td class="mdl-textfield mdl-js-textfield">
+				<label for="lname">Фамилия:</label>
+					{{userForm.lname(class_="mdl-textfield__input", value=lname if lname else "")}}
 					{% for error in userForm.errors.lname %}
 				    	<span style="color: red;">[{{error}}]</span>
 				    {% endfor %}<br>
 				</td>
 			</tr>
 			<tr>
-				<td><h4>Отчество:</h4></td>
-				<td>
-					{{userForm.pname(value=pname if pname else "")}}
+				<td class="mdl-textfield mdl-js-textfield">
+				<label for="pname">Отчество:</label>
+					{{userForm.pname(class_="mdl-textfield__input", value=pname if pname else "")}}
 					{% for error in userForm.errors.pname %}
 				    	<span style="color: red;">[{{error}}]</span>
 				    {% endfor %}<br>
 				</td>
 			</tr>
 			<tr>
-				<td><h4>Курс:</h4></td>
-				<td>
-					{{userForm.course(value=course if course else "")}}
+{% if not is_prepod %}
+				<td class="mdl-textfield mdl-js-textfield">
+				<label for="course">Курс:</label>
+					{{userForm.course(class_="mdl-textfield__input", value=course if course else "")}}
 					{% for error in userForm.errors.course %}
 				    	<span style="color: red;">[{{error}}]</span>
 				    {% endfor %}<br>
 				</td>
+{% endif %}
 			</tr>
 			<tr>
-				<td><h4>Группа:</h4></td>
-				<td>
-					{{userForm.group(value=group if group else "")}}
+				<td class="mdl-textfield mdl-js-textfield">
+				<label for="group">Групп{% if is_prepod %}ы{% else %}а{% endif %}:</label>
+					{{userForm.group(class_="mdl-textfield__input", value=group if group else "")}}
 					{% for error in userForm.errors.group %}
 				    	<span style="color: red;">[{{error}}]</span>
 				    {% endfor %}<br>
 				</td>
 			</tr>
 			<tr>
-				<td><h4>Вариант:</h4></td>
-				<td>
-					{{userForm.variant(value=variant if variant else "")}}
+				<td class="mdl-textfield mdl-js-textfield">
+				<label for="variant">Вариант:</label>
+					{{userForm.variant(class_="mdl-textfield__input", value=variant if variant else "")}}
 					{% for error in userForm.errors.variant %}
 				    	<span style="color: red;">[{{error}}]</span>
 				    {% endfor %}<br>
@@ -66,7 +76,7 @@
 		</tbody>
 	</table>
 	
-	<p><input type="submit" value="Add"></p>
+	<p><input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit" value="ОБНОВИТЬ/ДОБАВИТЬ"></p>
 
 </form>
 
