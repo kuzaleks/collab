@@ -5,7 +5,7 @@
 {% block content %}
 <h1 class="page-title">{{user.fname}} {{user.lname}}</h1>
 {% if g.user.is_prepod() %}
-<a href="/edit?id={{user.cart}}">
+<a href="/edit?cart={{user.cart}}">
 	<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
 	  ИЗМЕНИТЬ
 	</button>

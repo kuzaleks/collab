@@ -26,7 +26,8 @@ class User(db.Model, UserMixin):
 	attempts = db.relationship('Attempt', backref = 'author', lazy = 'dynamic')
 
 	# For teacher
-	keyword = db.Column(db.String(50), default="")
+	password = db.Column(db.String(150), default="")
+	salt = db.Column(db.String(150), default="")
 	groups = db.relationship("Group", secondary=association_table, back_populates="users")
 
 	def __repr__(self):

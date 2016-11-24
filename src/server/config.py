@@ -38,3 +38,5 @@ STATUS = {
 	"RuntimeError": 2,
 	"IncorrectAnswer": 3
 }
+
+SALT = "nHh3O4j6Hz7EmVAV"

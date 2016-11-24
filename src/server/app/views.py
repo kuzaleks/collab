@@ -4,24 +4,37 @@ from app import app, db, lm
 from forms import LoginForm, TaskSendForm, ConditionForm, UserUpdateForm
 from models import Lab, User, Task, Attempt, Group
 from datetime import datetime
-from utils import save, check_task, path_generate, get_status, users_tasks, clear_dir, dirs_create
-from config import STATUS, ROLE_USER, ROLE_PREPOD, ROLE_ADMIN
+from utils import save, check_task, path_generate, get_status, users_tasks, clear_dir, dirs_create, create_hash
+from config import STATUS, ROLE_USER, ROLE_PREPOD, ROLE_ADMIN, SALT
 from module import merge, biggest_lab_length, merge_obj
 from os.path import isfile
 from template import task_generate, task_regenerate
+from functools import wraps
 import collections
 
 """
 Routes:
+	/logout
 	/
 	/index
 	/login
 	/user/<int:cart>
+	/all_attempts
+	/all_users
+	/choose_task
 	/task/<int:task_id>
-	/add_user
 	/edit
 	/add_task
 """
+
+def prepod_only(f):
+	@wraps(f)
+	def decorator(*args, **kwargs):
+		if g.user.is_prepod():
+			return f(*args, **kwargs)
+		else:
+			return redirect(url_for('index'))
+	return decorator
 
 @lm.user_loader
 def get_user(ident):
@@ -51,11 +64,16 @@ def login():
 	
 	if form.validate_on_submit():
 		session['remember_me'] = form.remember_me.data
-		user = User.query.filter_by(keyword = form.number.data, lname = form.lastname.data).first()
-		
+		users_with_lname = User.query.filter_by(lname = form.lastname.data)
+		user = 0
+		if form.cart.data:
+			user = users_with_lname.filter_by(cart = form.cart.data).first()
+		if not user and form.password.data:
+			user = users_with_lname.filter_by(password = create_hash(form.password.data)).first()
+
 		if not user:
 			try:
-				user = User.query.filter_by(cart = int(form.number.data), lname = form.lastname.data).first()
+				user = User.query.filter_by(cart = int(form.cart.data), lname = form.lastname.data).first()
 			except Exception as e:
 				flash("User not found.")
 				return render_template('login.html', 
@@ -63,13 +81,13 @@ def login():
 					form = form)
 		
 		# user was found
-		return after_login(user, form.number.data)
+		return after_login(user, form.cart.data)
 
 	return render_template('login.html', 
 		title = 'Sign In',
 		form = form)
 
-def after_login(user, number):
+def after_login(user, cart):
 	if user is None:
 		flash("User not found.")
 		return redirect(url_for('login'))
@@ -111,10 +129,11 @@ def all_attempts():
 
 @app.route('/all_users')
 @login_required
+@prepod_only
 def all_users():
-	if not g.user.is_prepod():
-		flash('You are just user.')
-		return redirect(url_for('index'))
+	# if not g.user.is_prepod():
+	# 	flash('You are just user.')
+	# 	return redirect(url_for('index'))
 
 	users = User.query.filter_by(role = ROLE_USER).all()
 
@@ -185,45 +204,20 @@ def task(task_id):
 		taskSendForm = taskSendForm,
 		conditionForm = conditionForm)
 
-@app.route('/add_user', methods=('GET', 'POST'))
+@app.route('/edit', methods=('GET', 'POST'))
 @login_required
-def add_user():
+@prepod_only
+def edit():
 	userForm = UserUpdateForm()
 
 	cart = request.args.get('cart')
 	user = User.query.filter_by(cart = cart).first()
 	if not user:
+		# if g.user.is_prepod():
 		user = User()
 		user.cart = cart
-	
-	if  userForm.validate_on_submit():
-			user.fname = userForm.fname.data
-			user.lname = userForm.lname.data
-			user.pname = userForm.pname.data			
-			
-			if userForm.group.data and userForm.course.data:
-				user.set_group(userForm.course.data, userForm.group.data)
-			else:
-				user.update_groups_list(userForm.group.data)
-
-			user.variant = userForm.variant.data
-
-			db.session.add(user)
-			db.session.commit()
-			
-			return redirect(url_for("user", cart=cart))
-
-	return render_template('edit.html', 
-		userForm = userForm)
-
-
-@app.route('/edit', methods=('GET', 'POST'))
-@login_required
-def edit():
-	userForm = UserUpdateForm()
-
-	id = request.args.get('id')
-	user = User.query.filter_by(cart = id).first()
+		# else:
+		# 	return redirect(url_for("index"))
 
 	groups = user.groups_to_string()
 	
@@ -231,7 +225,6 @@ def edit():
 	group = None
 	
 	if not user.is_prepod():
-		print "Groups of the user: ", user.groups
 		users_group = {}
 		if len(user.groups):
 			users_group = user.groups[0]
@@ -239,7 +232,7 @@ def edit():
 			group = users_group.group_num
 	else:
 		group = groups
-	
+
 	if user:
 		if  userForm.validate_on_submit():
 			
@@ -257,9 +250,8 @@ def edit():
 			db.session.add(user)
 			db.session.commit()
 
-			return redirect(url_for("user", cart=id))
+			return redirect(url_for("user", cart=cart))
 
-		print "course, group: ", course, group,
 		return render_template('edit.html', 
 			userForm = userForm,
 			is_prepod = user.is_prepod(),
@@ -274,27 +266,31 @@ def edit():
 
 @app.route('/add_task', methods=('GET', 'POST'))
 @login_required
+@prepod_only
 def add_task():
-	if not g.user.is_prepod():
-		flash('User can\'t add or edit tasks.')
-		return redirect(url_for('index'))
 	
 	conditionForm = ConditionForm()
 	task = 0
 	id = request.args.get('id')
 	lab_num = request.args.get('lab')
+	
+	is_exist = bool(id) or bool(lab_num)
+	
 	if lab_num:
 		try:
-			lab = Lab.query.filter_by(num = lab_num).first().add_task()
+			lab = Lab.query.filter_by(num = lab_num).first()
+			if not conditionForm.validate_on_submit():
+				lab.add_task()
 			task = Task.query.all()[::-1][0]
+			print "ADDTASK:", task
 			id = task.id
 		except Exception as e:
 			print "Exception: ", e
-
-	is_exist = bool(id)
-
-	task = task or Task.query.filter_by(id = id).first() or Task()
+	else:
+		task = task or Task.query.filter_by(id = id).first() or Task()
 	
+	print "TASK:", task
+
 	filepath = "tasks/" + str(id) + ".html"
 	full_filepath = "app/templates/" + filepath
 

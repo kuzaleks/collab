@@ -1,8 +1,10 @@
 from werkzeug.utils import secure_filename
-from config import STATUS
-import os, subprocess
+from config import STATUS, SALT
 from models import Lab, User, Task, Attempt
 from module import merge
+import os, subprocess
+import hashlib
+import random
 
 def save(file, folderpath):
 	filename = secure_filename(file.filename)
@@ -74,3 +76,17 @@ def users_tasks(cart):
 			else:
 				result[lab].append(None)
 	return result
+
+def salt_generator(length = 16):
+	ALPHABET = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	chars=[]
+	for i in range(length):
+		chars.append(random.choice(ALPHABET))
+
+	return "".join(chars)
+
+
+def create_hash(password):
+	# if not salt: 
+	# 	salt = salt_generator()
+	return hashlib.sha512(password + SALT).hexdigest()

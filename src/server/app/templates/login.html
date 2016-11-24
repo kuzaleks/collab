@@ -1,45 +1,85 @@
 <html>
-  <head>
-    <title>Вход - CheckSystem</title>
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-    <link rel="stylesheet" href="../../static/css/style.css">
-  </head>
-  <body>
-    <div class="login-wrapper">
-        <form class="form-container" action="" method="post" name="login">
-            <div class="form-title"><h2>Авторизация</h2></div>
-            {{form.hidden_tag()}}
+	<head>
+	<title>Вход - CheckSystem</title>
+	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+	<link rel="stylesheet" href="../../static/css/style.css">
+	<link rel="stylesheet" href="../../static/css/material.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	</head>
+	<body>
+		<div class="login-wrapper">
+			<form class="form-container" action="" method="post" name="login">
+				<div><h2 class="form-title">Авторизация</h2></div>
+				{{form.hidden_tag()}}
 
-            <div class="form-title">Фамилия:</div>
-            <input class="form-field" type="text" name="lastname" /><br />
+				<div class="form-title">Фамилия:</div>
+				{{form.lastname(class_="form-field")}}<br />
 
-            <div class="form-title">Номер студенческого:</div>
-            <input class="form-field" type="text" name="number" /><br />
-
-            {% for error in form.errors.number %}
-            <span style="color: red;">[{{error}}]</span>
-            {% endfor %}<br>
-            
-
-            <div class="form-title">{{form.remember_me}} Запомнить меня</div>
-
-            {% with messages = get_flashed_messages() %}
-            {% if messages %}
-            <ul>
-            {% for message in messages %}
-                <li class="error">{{ message }} </li>
-            {% endfor %}
-            </ul>
-            {% endif %}
-            {% endwith %}
-
-            <div class="submit-container">
-                <input class="submit-button" type="submit" value="Войти" />
-            </div>
-        </form>
+				{% for error in form.errors.lastname %}
+				<span style="color: red;">[{{error}}]</span>
+				{% endfor %}<br>
 
 
-    </div>
-  </body>
+				<div class="cart">
+					<div class="form-title">Номер студенческого:</div>
+					{{form.cart(class_="form-field")}}<br />
+
+					{% for error in form.errors.cart %}
+					<span style="color: red;">[{{error}}]</span>
+					{% endfor %}<br>
+				</div>
+
+				<div class="password" style="display: none;">
+					<div class="form-title">Пароль:</div>
+					{{form.password(class_="form-field")}}<br />
+
+					{% for error in form.errors.password %}
+					<span style="color: red;">[{{error}}]</span>
+					{% endfor %}<br>
+				</div>
+				
+
+				<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="remember_me">
+					{{form.remember_me(class_="mdl-checkbox__input")}}
+					<span class="mdl-checkbox__label form-title">Запомнить меня</span>
+				</label>
+
+				<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="teacher">
+					<input type="checkbox" id="teacher" class="mdl-checkbox__input" onclick="change_field()">
+					<span class="mdl-checkbox__label form-title">Преподаватель</span>
+				</label>
+
+				{% with messages = get_flashed_messages() %}
+				{% if messages %}
+				<ul>
+				{% for message in messages %}
+					<li class="error">{{ message }} </li>
+				{% endfor %}
+				</ul>
+				{% endif %}
+				{% endwith %}
+
+				<div class="submit-container">
+					<input class="submit-button" type="submit" value="Войти" />
+				</div>
+			</form>
+
+
+			<script src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+			<script>
+				function change_field(){
+					elem = document.querySelector('.password')
+					cart = document.querySelector('.cart')
+					if (elem.style.display == "none"){
+						elem.style.display = "block"
+						cart.style.display = "none"
+					}else{
+						elem.style.display = "none"
+						cart.style.display = "block"
+					}
+				}
+			</script>
+		</div>
+	</body>
 </html>
 

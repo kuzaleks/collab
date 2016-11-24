@@ -1,10 +1,11 @@
 from flask.ext.wtf import Form
-from wtforms import TextField, FileField, BooleanField, TextAreaField
+from wtforms import TextField, FileField, BooleanField, TextAreaField, PasswordField
 from wtforms.validators import DataRequired, Required, Length
 from models import User, Lab, Task
 
 class LoginForm(Form):
-	number = TextField('number', validators = [Required()])
+	cart = TextField('number')
+	password = PasswordField('number')
 	lastname = TextField('lastname', validators = [Required()])
 	remember_me = BooleanField('remember_me', default = False)
 
@@ -21,7 +22,7 @@ class UserUpdateForm(Form):
 	lname = TextField('lname', validators = [Required()])
 	pname = TextField('pname', validators = [Required()])
 
-	course = TextField('course', validators = [Required()])
-	group = TextField('group', validators = [Required()])
+	course = TextField('course')
+	group = TextField('group')
 	
-	variant = TextField('variant', validators = [Required()])
+	variant = TextField('variant')
