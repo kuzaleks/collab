@@ -122,7 +122,14 @@ def user(cart):
 @app.route('/all_attempts')
 @login_required
 def all_attempts():
-	attempts = Attempt.query.filter_by(user_id = g.user.id).all()
+	attempts = []
+	if g.user.is_prepod():
+		users = [user for user in User.query.filter_by(role = ROLE_USER).all() if user.get_group_obj() in g.user.groups]
+		for user in users:
+			attempts = attempts + Attempt.query.filter_by(user_id = user.id).all()
+		attempts = sorted(attempts, key=lambda attempt: attempt.timestamp)
+	else:
+		attempts = Attempt.query.filter_by(user_id = g.user.id).all()
 
 	return render_template('all_attempts.html',
 		attempts = reversed(attempts),
