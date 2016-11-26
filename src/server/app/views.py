@@ -105,7 +105,7 @@ def after_login(user, cart):
 def user(cart):
 	user = User.query.filter_by(cart = cart).first()
 
-	if not user or (g.user.is_prepod() and not user.get_group_obj() in g.user.groups):
+	if not user or (not user.is_teached_by(g.user) and not g.user == user):
 		return redirect(url_for('index'))        
 
 	table = merge(Task.query.all(), Lab.query.all())

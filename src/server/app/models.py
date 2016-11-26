@@ -36,6 +36,9 @@ class User(db.Model, UserMixin):
 	def is_authenticated(self):
 		return True
 
+	def is_teached_by(self, prepod):
+		return prepod.is_prepod() and self.get_group_obj() in prepod.groups;
+
 	def get_course(self):
 		if len(self.groups) == 1 and not self.is_prepod():
 			return self.groups[0].course

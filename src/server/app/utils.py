@@ -89,4 +89,4 @@ def salt_generator(length = 16):
 def create_hash(password):
 	# if not salt: 
 	# 	salt = salt_generator()
-	return hashlib.sha512(password + SALT).hexdigest()
+	return hashlib.sha512(password.encode('utf-8') + SALT).hexdigest()
