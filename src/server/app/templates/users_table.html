@@ -25,25 +25,27 @@
 
 <table class="users-table">
 	<thead>
-		<th>Студенческий</th>
-		<th>Фамилия</th>
-		<th>Имя</th>
-		<th>Отчество</th>
-		<th>Курс</th>
-		<th>Группа</th>
-		<th>Вариант</th>
+		{% for i in range(columns_length) %}
+		<th>
+			<a href="/all_users?sort_by={{i}}">
+				{{columns[i].name}}
+			</a>
+		</th>
+		{% endfor %}
 	</thead>
 
 	<tbody>
 		{% for user in users %}
 			<tr>
-				<td><a href="/user/{{user.cart}}">{{user.cart}}</a></td>
-				<td>{{user.lname}}</td>
-				<td>{{user.fname}}</td>
-				<td>{{user.pname}}</td>
-				<td>{{user.get_course()}}</td>
-				<td>{{user.get_group()}}</td>
-				<td>{{user.variant}}</td>
+				{% for col in columns %}
+				<td>
+					{% if col == columns[0] %}
+						<a href="/user/{{col.f(user)}}">{{col.f(user)}}</a>
+					{% else %}
+						{{col.f(user)}}
+					{% endif %}
+				</td>
+				{% endfor %}
 				<td>
 					<button class="mdl-button mdl-js-button mdl-button--raised" onclick="show({{user.cart}});">Таблица</button>
 				</td>

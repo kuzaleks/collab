@@ -5,7 +5,7 @@ from forms import LoginForm, TaskSendForm, ConditionForm, UserUpdateForm
 from models import Lab, User, Task, Attempt, Group
 from datetime import datetime
 from utils import save, check_task, path_generate, get_status, users_tasks, clear_dir, dirs_create, create_hash
-from config import STATUS, ROLE_USER, ROLE_PREPOD, ROLE_ADMIN, SALT
+from config import STATUS, ROLE_USER, ROLE_PREPOD, ROLE_ADMIN, SALT, COLUMNS
 from module import merge, biggest_lab_length, merge_obj
 from os.path import isfile
 from template import task_generate, task_regenerate
@@ -140,13 +140,20 @@ def all_attempts():
 @prepod_only
 def all_users():
 
+	sort_by = request.args.get('sort_by')
+	col_to_sort_by = COLUMNS[int(sort_by if sort_by else 0)]
+
 	users = [user for user in User.query.filter_by(role = ROLE_USER).all() if user.get_group_obj() in g.user.groups]
+
+	users = sorted(users, key=lambda x : col_to_sort_by.f(x))
 
 	table = merge(Task.query.all(), Lab.query.all())
 	table_width = biggest_lab_length(table)
 
 	return render_template('users_table.html',
 		users = users,
+		columns = COLUMNS,
+		columns_length = len(COLUMNS),
 		table = table,
 		get_status = get_status,
 		table_width = table_width,

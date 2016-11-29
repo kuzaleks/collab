@@ -1,7 +1,7 @@
 from flask.ext.login import UserMixin
 from app import db
 from hashlib import md5
-from config import ROLE_USER, ROLE_PREPOD, ROLE_ADMIN, PART_A, PART_B, STATUS
+from config import ROLE_USER, ROLE_PREPOD, ROLE_ADMIN, STATUS
 
 association_table = db.Table('association', db.metadata,
 	db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
