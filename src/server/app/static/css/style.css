@@ -1,5 +1,7 @@
 *{margin: 0; padding: 0;}
 
+
+
 @font-face {
     font-family: "B20SansSemiCondensed";
     src: url("../fonts/B20SansSemiCondensed/B20SansSemiCondensed.eot");
@@ -10,10 +12,10 @@
     font-weight: normal;
 }
 
-h1, h2, h3, h4, h5, th, td, a, span, p{
+h1, h2, h3, h4, h5, th, td, a, span, p, pre{
 	font-family: B20SansSemiCondensed;
 	color: white;
-    font-size: 1.2em;
+    font-size: 1.1em;
 }
 
 .mdl-button{
@@ -106,7 +108,20 @@ pre {
     line-height: 1.25em;
     padding: 0.25em;
     margin: 0;
-    background-color: #efefef;
+}
+.input pre, .output pre{
+  background-color: #efefef; 
+  color: black; 
+}
+
+.attempt{
+  border-left: 3px solid #FFE300;
+  margin-left: 20px;
+  padding-left: 20px;
+}
+
+.attempt p{
+  margin: 0;
 }
 
 .upload{
@@ -228,7 +243,7 @@ header .wrapper li a:hover{
 }
 
 header .wrapper li a{
-    padding: 20px 15px;
+    padding: 20px 9px;
     line-height: 50px;
     color: #fff;
     text-decoration: none;
@@ -237,9 +252,10 @@ header .wrapper li a span{
 }
 
 body{
-	background-image: url(../img/dark_embroidery.png); /* Путь к фоновому рисунку */
-	background-repeat: repeat;
-	/*background: rgba(248, 239, 228, 0.77);*/
+	background: rgba(248, 239, 228, 0.77);
+  background-image: url(../img/dark_embroidery.png); /* Путь к фоновому рисунку */
+  background-repeat: repeat;
+  min-width: 900px;
 }
 /********************** LOGIN PAGE ***************************/
 .login-wrapper{

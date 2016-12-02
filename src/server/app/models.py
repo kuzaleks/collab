@@ -132,6 +132,7 @@ class Task(db.Model):
 class Attempt(db.Model):
 	id = db.Column(db.Integer, primary_key = True)
 	status = db.Column(db.Integer)
+	message = db.Column(db.Text)
 	timestamp = db.Column(db.Integer)
 	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 	task_id = db.Column(db.Integer, db.ForeignKey('task.id'))

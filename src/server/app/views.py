@@ -183,19 +183,24 @@ def task(task_id):
 
 	# on new attempt
 	if taskSendForm.validate_on_submit():
-		folderpath = path_generate(task.lab_num, task.num, g.user.variant, g.user.cart)
+		folderpath = path_generate([task.lab_num, task.num, g.user.variant, g.user.cart])
 		files = request.files.getlist("task")
 		dirs_create(folderpath)
 		clear_dir(folderpath)
 		for file in files:
 			save(file, folderpath)
+
+		task_response = check_task(folderpath)
+
 		attempt = Attempt(
 			timestamp = datetime.utcnow(), 
 			author = g.user, 
-			status = check_task(folderpath),
+			status = task_response["status"],
+			message = task_response["message"].decode('utf8'),
 			task = task)
 		db.session.add(attempt)
 		db.session.commit()
+		return redirect(url_for('task', task_id=task_id))
 
 	# on task add
 	if conditionForm.validate_on_submit():
