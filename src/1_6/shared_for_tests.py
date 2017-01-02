@@ -6,9 +6,8 @@
 
 import os
 import subprocess
-import sys
 
-from subprocess import check_output, Popen, PIPE
+from subprocess import Popen, PIPE
 
 
 def lab_verification(path_to_bin, args, expected_output):
@@ -33,7 +32,7 @@ def compile_lab(path_to_src):
     path_to_bin = os.path.join('/tmp', '1_6.out')
     print path_to_bin
     try:
-        comp = subprocess.check_output(
+        subprocess.check_output(
             ['g++',
              '-std=c++11',
              path_to_src,

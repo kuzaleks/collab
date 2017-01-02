@@ -7,7 +7,6 @@ from shared_for_tests import compile_lab
 from shared_for_tests import lab_verification
 
 import pytest
-import sys
 
 
 variants = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
@@ -127,4 +126,5 @@ expected_results = [
 @pytest.mark.parametrize('data,path_to_lab', expected_results, ids=variants)
 def test_something(data, path_to_lab):
     path_to_bin = compile_lab(path_to_lab)
-    for i in data:  lab_verification(path_to_bin, [i], data[i])
+    for i in data:
+        lab_verification(path_to_bin, [i], data[i])
