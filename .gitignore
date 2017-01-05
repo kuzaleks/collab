@@ -6,3 +6,4 @@ bin/
 dev/
 *.cache/
 *__pycache__/
+*.pyc
