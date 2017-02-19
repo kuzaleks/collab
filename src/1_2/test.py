@@ -31,7 +31,10 @@ variants_data = [
          [[10, -5, -5], 'Yes'], [[10, 1, -3], 'No'], [[10, 1, 3.1], 'Yes']]),
     ]
 
-variants = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+"""If num of variant without 0 then test starts for variants 
+   with the same numbers
+"""
+variants = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
 
 def generic_test_lab(path_to_src, input_args, expected_output):
     """Compliles lab using g++ and runs it passing @input_args
@@ -64,4 +67,4 @@ def test_start(indata):
         generic_test_lab(getPath(), inp[0], inp[1])
 
 def getPath():
-    return 'examples_of_labs/1_2/1.2.4.cpp'
+    return '/home/apache/collab/examples_of_labs/1_2/1.2.2.cpp'
