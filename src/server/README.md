@@ -19,6 +19,7 @@ $ ./db_create.py
 
 Then navigate into the folder, and run:
 ```sh
+$ pip install -r requirements.txt
 # chmod +x ./run.py
 $ ./run.py
 ```

@@ -25,13 +25,13 @@ class Column:
 		self.f = f
 
 COLUMNS = [
-	Column("Студенческий", lambda x : x.cart),
-	Column("Фамилия", lambda x : x.lname),
-	Column("Имя", lambda x : x.fname),
-	Column("Отчество", lambda x : x.pname),
-	Column("Курс", lambda x : x.get_course()),
-	Column("Группа", lambda x : x.get_group()),
-	Column("Вариант", lambda x : x.variant)
+	Column("Студенческий", 	lambda x : x.cart),
+	Column("Фамилия", 		lambda x : x.lname),
+	Column("Имя", 			lambda x : x.fname),
+	Column("Отчество", 		lambda x : x.pname),
+	Column("Курс", 			lambda x : x.get_course()),
+	Column("Группа", 		lambda x : x.get_group()),
+	Column("Вариант", 		lambda x : x.variant)
 ]
 
 SALT = "nHh3O4j6Hz7EmVAV"
